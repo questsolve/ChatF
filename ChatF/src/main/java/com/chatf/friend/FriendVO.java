@@ -1,8 +1,8 @@
 package com.chatf.friend;
 
-public class Friend {
+public class FriendVO {
 
-	public Friend() {
+	public FriendVO() {
 		// TODO Auto-generated constructor stub
 	}
 
