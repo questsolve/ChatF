@@ -70,6 +70,8 @@ public class PointDaoImpl implements PointDao {
 				point.setUserId(rs.getString("user_id"));
 				point.setUsageFlag(rs.getString("usage_flag"));
 				point.setUsageTime(rs.getString("usage_time"));
+				point.setPoint(rs.getInt("point"));
+				
 			}
 			
 		} catch (SQLException e) {
