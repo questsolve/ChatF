@@ -26,7 +26,6 @@ public class PayDaoImpl implements PayDao {
 
 	public int addPay(PayVO pay) {
 		int res =0;
-		//TODO
 		StringBuilder sb = new StringBuilder();
 		sb.append("INSERT INTO");
 		sb.append(" pay(pay_no,usage_no,pay_way,price,pay_date,pay_flag)");
@@ -45,7 +44,6 @@ public class PayDaoImpl implements PayDao {
 						
 			res = pstate.executeUpdate();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
 			dbm.dbClose(con, pstate);
@@ -94,7 +92,6 @@ public class PayDaoImpl implements PayDao {
 			}
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
 			dbm.dbClose(con, pstate,rs);
@@ -107,9 +104,10 @@ public class PayDaoImpl implements PayDao {
 
 
 
+	//TODO
 	public List<PayVO> listPay(String userId,Page page){
 		List<PayVO> payList = new ArrayList<PayVO>();
-		//TODO
+
 		int total =0;
 		StringBuilder sb = new StringBuilder();
 		sb.append("SELECT");
@@ -151,7 +149,7 @@ public class PayDaoImpl implements PayDao {
 			}
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}finally {
 			dbm.dbClose(con, pstate,rs);
@@ -160,7 +158,6 @@ public class PayDaoImpl implements PayDao {
 		
 		return payList;
 	}
-	
 	
 	private int listCount(String sql,String userId) {
 		int rowCount =0;
@@ -181,7 +178,6 @@ public class PayDaoImpl implements PayDao {
 				rowCount = rs.getInt("cnt");
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
