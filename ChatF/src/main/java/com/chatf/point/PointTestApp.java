@@ -1,12 +1,10 @@
 package com.chatf.point;
 
-import java.util.Iterator;
+
 import java.util.List;
 
 import com.chatf.point.dao.PointDao;
 import com.chatf.point.dao.PointDaoImpl;
-
-import oracle.net.aso.p;
 
 public class PointTestApp {
 
@@ -31,7 +29,7 @@ public class PointTestApp {
 		
 		List<PointVO> list = pointDao.listPoint("testuser01");
 		for (PointVO pointVO : list) {
-			System.out.println(pointVO);
+			
 		}
 		
 	}
