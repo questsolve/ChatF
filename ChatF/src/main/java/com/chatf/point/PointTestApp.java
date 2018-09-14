@@ -3,6 +3,7 @@ package com.chatf.point;
 
 import java.util.List;
 
+import com.chatf.common.Search;
 import com.chatf.point.dao.PointDao;
 import com.chatf.point.dao.PointDaoImpl;
 
@@ -26,8 +27,10 @@ public class PointTestApp {
 		
 		point = pointDao.readPoint(4100000);
 		System.out.println(point);
-		
-		List<PointVO> list = pointDao.listPoint("testuser01");
+		Search search = new Search(); 
+		search.setCurrentPage(1);
+		search.setPageSize(2);
+		List<PointVO> list = pointDao.listPoint("testuser01",search);
 		for (PointVO pointVO : list) {
 			
 		}
