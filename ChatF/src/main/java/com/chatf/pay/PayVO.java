@@ -1,8 +1,8 @@
 package com.chatf.pay;
 
-public class Pay {
+public class PayVO {
 
-	public Pay() {
+	public PayVO() {
 		// TODO Auto-generated constructor stub
 	}
 
