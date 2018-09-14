@@ -2,6 +2,7 @@ package com.chatf.pay;
 
 import java.util.List;
 
+import com.chatf.common.Page;
 import com.chatf.pay.dao.PayDao;
 import com.chatf.pay.dao.PayDaoImpl;
 import com.chatf.point.PointVO;
@@ -24,8 +25,8 @@ public class PayTestApp {
 		
 		//System.out.println(count);
 		
-		
-		List<PayVO> list = payDao.listPay("testuser");
+		Page page = new Page();
+		List<PayVO> list = payDao.listPay("testuser01",page);
 		System.out.println(list.size());
 		for (int i = 0; i < list.size(); i++) {
 			System.out.println(list.get(i));

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.chatf.common.DBManager;
+import com.chatf.common.Page;
 import com.chatf.pay.PayVO;
 import com.chatf.point.PointVO;
 
@@ -25,7 +26,6 @@ public class PayDaoImpl implements PayDao {
 
 	public int addPay(PayVO pay) {
 		int res =0;
-		//TODO
 		StringBuilder sb = new StringBuilder();
 		sb.append("INSERT INTO");
 		sb.append(" pay(pay_no,usage_no,pay_way,price,pay_date,pay_flag)");
@@ -44,7 +44,6 @@ public class PayDaoImpl implements PayDao {
 						
 			res = pstate.executeUpdate();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
 			dbm.dbClose(con, pstate);
@@ -93,7 +92,6 @@ public class PayDaoImpl implements PayDao {
 			}
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
 			dbm.dbClose(con, pstate,rs);
@@ -106,10 +104,11 @@ public class PayDaoImpl implements PayDao {
 
 
 
-	public List<PayVO> listPay(String userId){
+	//TODO
+	public List<PayVO> listPay(String userId,Page page){
 		List<PayVO> payList = new ArrayList<PayVO>();
-		//TODO
 
+		int total =0;
 		StringBuilder sb = new StringBuilder();
 		sb.append("SELECT");
 		sb.append(" pay_no,u.usage_no,pay_way,price,TO_CHAR(pay_date,'YYYY/MM/DD') AS pay_date,pay_flag");
@@ -127,7 +126,8 @@ public class PayDaoImpl implements PayDao {
 			con = dbm.dbConn();
 			pstate = con.prepareStatement(sb.toString());
 			pstate.setString(1, userId);
-			
+			total = listCount(sb.toString(),userId);
+			System.out.println(total);
 			rs = pstate.executeQuery();
 			
 			while(rs.next()) {
@@ -149,7 +149,7 @@ public class PayDaoImpl implements PayDao {
 			}
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}finally {
 			dbm.dbClose(con, pstate,rs);
@@ -159,9 +159,32 @@ public class PayDaoImpl implements PayDao {
 		return payList;
 	}
 	
+	private int listCount(String sql,String userId) {
+		int rowCount =0;
+		StringBuilder sb = new StringBuilder();
+		sb.append("SELECT COUNT(1) AS cnt");
+		sb.append(" FROM (").append(sql).append(")");
+		
+		DBManager dbm = new DBManager();
+		Connection con =null;
+		PreparedStatement pstate = null;
+		ResultSet rs = null;
+		try {
+			con = dbm.dbConn();
+			pstate = con.prepareStatement(sb.toString());
+			pstate.setString(1, userId);
+			rs = pstate.executeQuery();
+			while(rs.next()) {
+				rowCount = rs.getInt("cnt");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+		return rowCount;
+	}
 	
-
-
 
 
 }
