@@ -29,8 +29,6 @@ public class PayTestApp {
 		int count = payDao.listCount("testuser01");
 		System.out.println(count);
 		
-		Page page = new Page(3, count, 3, 3);
-		
 		Search search = new Search();
 		search.setCurrentPage(3);
 		search.setPageSize(3);
