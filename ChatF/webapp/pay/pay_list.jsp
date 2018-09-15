@@ -37,11 +37,83 @@
  
     $( "#salutation" ).selectmenu();
   } );
+  
+  $(function(){
+	  $("input[name=submit]").on("click",function(){
+		  var cmd =$("input[name=cmd]").val();
+		  var business=$("input[name=business]").val();
+		  var name= $("input[name=item_name]").val();
+		  var number = $("input[name=item_number]").val();
+		  var code = $("input[name=currency_code]").val();
+		  var amount = $("input[name=amount]").val();
+		  var chset = $("input[name=charset]").val();
+		  
+		  //alert(cmd+","+business+","+name+","+number+","+code+","+amount+","+chset);
+		  
+		  ajaxPayPal()
+		// onSubmit(cmd,business,name,number,code,amount,chset);
+		  
+		  // $("form").attr("method","post").attr("action","https://www.sandbox.paypal.com/cgi-bin/webscr").submit();
+		  //window.open("https://www.sandbox.paypal.com/cgi-bin/webscr");
+	  })
+  });
+  
+  function onSubmit(cmd,business,name,number,code,amount,chset){
+	  alert($("input[name=cmd]").val());
+	  
+	  var myForm = $("form");
+	  var url = "https://www.sandbox.paypal.com/cgi-bin/webscr";
+	  window.open("https://www.sandbox.paypal.com/cgi-bin/webscr" ,"testform", 
+	        "toolbar=no, width=540, height=467, directories=no, status=no,    scrollorbars=no, resizable=no"); 
+	   
+	  myForm.method="post";
+	  myForm.target="popForm";
+	  myForm.cmd.val = cmd
+	  myForm.business.val = business
+	  myForm.item_number.val = number 
+	  myForm.item_name.val = name
+	  myForm.currency_code.val = code
+	  myForm.amount.val = amount
+	  myForm.charset.val = charset
+	  
+	  
+	  myForm.testVal = 'test';
+	  myForm.submit();
+	 }
+  
+  var target ={
+		  cmd : $("input[name=cmd]").val(),
+		  business:$("input[name=business]").val(),
+		  item_name: $("input[name=item_name]").val(),
+		  item_number :$("input[name=item_number]").val(),
+		  currency_code : $("input[name=currency_code]").val(),
+		  amount : $("input[name=amount]").val(),
+		  charset : $("input[name=charset]").val()
+  }
+
+   
+  function ajaxPayPal(){
+	  $.ajax({
+		  url:"https://www.sandbox.paypal.com/cgi-bin/webscr",
+			type:"post",
+			data:JSON.stringify(target),
+			success:function(res){
+				window.open(res);
+			}
+	  })
+  }
+  
+  
+  
+  
+  
+  
   </script>
 <style type="text/css">
 #galleries .column {
 	padding-left: 20%;
 	padding-right: 20%;
+	padding-top:5%;
 }
 </style>
 </head>
@@ -82,8 +154,17 @@
 			<section id="galleries">
 
 				<div class="column">
-					<h3>Get in Touch</h3>
+					
+					
 					<form action="#" method="post">
+					<input type="hidden" name="cmd" value="_xclick">
+					<input type="hidden" name="business" value="questsolve-facilitator@hanmail.net">
+					
+					<input type="hidden" name="item_name" value="Test Item 0001"><br/>
+					<input type="hidden" name="item_number" value="ITEM0001"><br />
+					<input type="hidden" name="currency_code" value="USD"><br /> 
+					
+					<input type="hidden" name="charset" value="UTF-8"><br /><br />
 						<div class="field half first">
 							<label for="name">userId</label> <input name="name" id="name"
 								type="text" placeholder="Name">
@@ -92,6 +173,7 @@
 							<label for="email">pay_way</label>
 							<!-- <img src ="../custom_image/images.png"> -->
 							<fieldset>
+							
 								<select name="speed" id="speed">
 									<option>paypal</option>
 									<option>kakaopay</option>
@@ -105,11 +187,11 @@
 						</div>
 						<div class="field">
 							<label for="message">Message</label>
-							<textarea name="message" id="message" rows="6"
-								placeholder="Message"></textarea>
+							<input type="text" name="amount" value="5"><br />
 						</div>
 						<ul class="actions">
 							<li><input value="Send Message" class="button" type="submit"></li>
+							<li><input type="image" name="submit" border="0" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynow_LG.gif" alt="PayPal - The safer, easier way to pay online"></li>
 						</ul>
 					</form>
 				</div>
