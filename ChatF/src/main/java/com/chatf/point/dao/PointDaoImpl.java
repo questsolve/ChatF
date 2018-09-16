@@ -131,5 +131,44 @@ public class PointDaoImpl implements PointDao {
 	}
 	
 	
+	public int readCurrentPointNO(String userId) {
+		int currentUsageNo = 0;
+		//TODO
+		StringBuilder sb = new StringBuilder();
+		sb.append("SELECT * FROM(");
+		sb.append(" SELECT usage_no");
+		sb.append(" FROM point_usage");
+		sb.append(" WHERE user_id = ?");
+		//TODO ROWNUM 확인 
+		sb.append(" ORDER BY usage_time DESC )");
+		sb.append(" WHERE ROWNUM <2");
+		
+		
+		DBManager dbm = new DBManager();
+		Connection con = null;
+		PreparedStatement pstate = null;
+		ResultSet rs = null;
+		try {
+			con = dbm.dbConn();
+			pstate = con.prepareStatement(sb.toString());
+			pstate.setString(1,userId);
+			rs = pstate.executeQuery();
+			
+			if(rs.next()) {
+				currentUsageNo = rs.getInt("usage_no");
+				System.out.println("pointDAO : "+currentUsageNo);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return currentUsageNo;
+	}
+	
+	
+	
 	
 }

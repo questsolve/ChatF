@@ -26,68 +26,80 @@
 
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
+<script src="https://www.paypalobjects.com/api/checkout.js"></script>
 <script>
-$(function(){
-	$("input[name=userId]").keyup(function(){
-		var queryString = $("form").serialize();
-		
-		
-		searchUserId(queryString);
-	});
-});
+	var USDprice = 5;
+	var productNo = 1;
 
-function showListPay(data){
-	var jsonData = JSON.parse(data);
-	var htmlStr ="";
-	$.map(jsonData, mapCallback);
-	function mapCallback( v,  i) { 
-		htmlStr += "<tr><td>"+v.payNo+"</td>";
-		htmlStr += "<td>"+v.payDate+"</td>";
-		htmlStr += "<td>"+v.price+"</td>";
-		htmlStr += "<td>"+v.payFlag+"</td></tr>";
-		
+	$(function() {
+		$("input[name=amount]").keyup(function() {
+			USDprice = $("input[name=amount]").val();
+		})
+	})
+
+	paypal.Button
+			.render(
+					{
+						env : 'sandbox', // sandbox | production
+
+						client : {
+							sandbox : 'AZDxjDScFpQtjWTOUtWKbyN_bDt4OgqaF4eYXlewfBP4-8aqX3PiV8e1GWU6liB2CUXlkA59kJXE7M6R',
+							production : productNo
+						},
+
+						commit : true, // Show a 'Pay Now' button
+
+						style : {
+							label : 'paypal',
+							size : 'medium', // small | medium | large | responsive
+							shape : 'rect', // pill | rect
+							color : 'gold', // gold | blue | silver | black
+							tagline : false
+						},
+
+						payment : function(data, actions) {
+							return actions.payment.create({
+								payment : {
+									transactions : [ {
+										amount : {
+											total : USDprice,
+											currency : 'USD'
+										}
+									} ]
+								}
+							});
+						},
+
+						// Wait for the payment to be authorized by the customer
+						onAuthorize : function(data, actions) {
+							// Execute the payment
+							return actions.payment.execute().then(function() {
+								//makeToast('Payment Complete!');
+								addPay();
+							});
+
+						},
+						onCancel : function(data, actions) {
+							makeToast("결제 진행이 취소되었습니다. 다시 결제 부탁드립니다. :: ");
+						},
+						onError : function(err) {
+							makeToast("결제에 실패하였습니다. 다시 결제 부탁드립니다. :: ");
+						}
+					}, '#paypal-button');
+	
+	
+	function addPay(){
+		$("form").attr("method","POST").attr("action","/PointServlet").submit();
 	}
 	
-	
-	$("#board").html(htmlStr);
-}
-
-
- 
-
-function searchUserId(query){
-		//alert($("input[name=userId]").val());
-		$.ajax({
-			url :"/PayServlet",
-			method:"post",
-			data:query,
-			success:function(res){
-				showListPay(res);
-			}
-		})
-}
-
-
-
-
 </script>
-
 
 <style type="text/css">
 #galleries .column {
-	padding-left: 20%;
-	padding-right: 20%;
+	padding-left: 30%;
+	padding-right: 30%;
 	padding-top:5%;
-
-}
-#search{
-border-right:none;
-border-left:none;
-border-top:none;
-border-bottom:none;
- 
-
+	
 }
 </style>
 </head>
@@ -99,10 +111,8 @@ border-bottom:none;
 			<ul>
 				<li><a href="index.html" class="active"><span
 						class="icon fa-home"></span></a></li>
-				<li><a href="gallery.html"><span
-						class="icon fa-camera-retro"></span></a></li>
-				<li><a href="generic.html"><span
-						class="icon fa-file-text-o"></span></a></li>
+				<li><a href="gallery.html"><span class="icon fa-camera-retro"></span></a></li>
+				<li><a href="generic.html"><span class="icon fa-file-text-o"></span></a></li>
 			</ul>
 		</nav>
 
@@ -131,61 +141,29 @@ border-bottom:none;
 					
 					
 					<form action="#" method="post">
-						<div>
-							<table>
-								<tbody >
-									<tr id="search">
-										<td>확인할 User :</td>
-										<td><input type="text" name="userId" value=""></td>
-										
-									</tr>
-								</tbody>
-							</table>
-
-						</div>
-
-
-						<div class="field">
-							<table>
-								<thead>
-									<tr>
-										<td>결제 번호</td>
-										<td>결제일</td>
-										<td>결제액</td>
-										<td>구분</td>
-									</tr>
-								</thead>
-								<tbody id="board">
-									
-									<tr>
-										<c:if test="${empty payList}">
-											<td>testNo</td>
-											<td>testDate</td>
-											<td>testPrice</td>
-											<td>testFlag</td>
-										</c:if>
-										
-										<c:if test="${payList}">
-
-											<c:forEach items="${payList}" varStatus="pay">
-												<td>${pay.payNo}</td>
-												<td>${pay.payDate }</td>
-												<td>${pay.price }</td>
-												<td>${pay.payFlag}</td>
-											</c:forEach>
-											
-										</c:if>
-									</tr>
-								</tbody>
-							</table>
+						<input type="hidden" name="check" value= "addPay">
+					
+					
+						<div class="field half first">
+							<label for="name">
+							<c:if test="${! empty session_user}">
+								${session_user.userId}
+							</c:if>
+							<c:if test="${ empty session_user}">
+								userid
+							</c:if>
 							
+							</label> 
+						</div>
+						<div class="field">
+							<label for="message">결제 금액</label>
+							<input type="text" name="amount" value=""><br/>
 						</div>
 						<ul class="actions">
 							
-
+							<li><div class="col-sm-3 pay"><a id="paypal-button"></a></div></li>
 							
 						</ul>
-						<input type="hidden" name="check" value="listPay">
 					</form>
 				</div>
 				

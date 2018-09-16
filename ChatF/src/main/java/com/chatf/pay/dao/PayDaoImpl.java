@@ -105,7 +105,7 @@ public class PayDaoImpl implements PayDao {
 
 
 
-	//TODO
+
 	public List<PayVO> listPay(String userId,Search search){
 		List<PayVO> payList = new ArrayList<PayVO>();
 
@@ -196,6 +196,40 @@ public class PayDaoImpl implements PayDao {
 		return rowCount;
 	}
 	
+	public int readCurrentPay(int usage_no) {
+		int currnetPayNo =0;
+		StringBuilder sb = new StringBuilder();
+		sb.append("SELECT * FROM (");
+		sb.append(" SELECT pay_no");
+		sb.append(" FROM pay");
+		sb.append(" WHERE usage_no = ?");
+		sb.append(" ORDER BY pay_no DESC )");
+		sb.append(" WHERE ROWNUM < 2");
+
+		DBManager dbm = new DBManager();
+		Connection con =null;
+		PreparedStatement pstate = null;
+		ResultSet rs = null;
+		try {
+			con = dbm.dbConn();
+			pstate = con.prepareStatement(sb.toString());
+			pstate.setInt(1, usage_no);
+			rs = pstate.executeQuery();
+
+			if(rs.next()) {
+				currnetPayNo = rs.getInt("pay_no");
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			dbm.dbClose(con, pstate,rs);
+		}
 
 
+
+		return currnetPayNo;
+	}
+
+	
 }
