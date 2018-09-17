@@ -28,8 +28,11 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <script>
+
+//키보드 입력 시  
 $(function(){
 	$("input[name=userId]").keyup(function(){
+		
 		var queryString = $("form").serialize();
 		
 		
@@ -42,15 +45,16 @@ function showListPay(data){
 	var htmlStr ="";
 	$.map(jsonData, mapCallback);
 	function mapCallback( v,  i) { 
-		htmlStr += "<tr><td>"+v.payNo+"</td>";
+		htmlStr += "<tr>"
+		htmlStr +="<td>"+v.payNo+"</td>";
 		htmlStr += "<td>"+v.payDate+"</td>";
 		htmlStr += "<td>"+v.price+"</td>";
-		htmlStr += "<td>"+v.payFlag+"</td></tr>";
-		
+		htmlStr += "<td>"+v.payFlag+"</td>";
+		htmlStr += "</tr>"
 	}
 	
 	
-	$("#board").html(htmlStr);
+	$("#board").append(htmlStr);
 }
 
 
@@ -64,11 +68,77 @@ function searchUserId(query){
 			data:query,
 			success:function(res){
 				showListPay(res);
+				
 			}
 		})
 }
+var flag;
+var page =1;
+
+///* 
+$(function () {
+	$(document).scroll(function() {
+	    var maxHeight = $(document).height();
+	    var currentScroll = $(window).scrollTop() + $(window).height();
+		var id = $("input[name=userId]").val();
+	    
+	    if (maxHeight <= currentScroll && !(id ==null || id =="") ) {
+		//TODO
+		
+		page++;
+		$("input[name=page]").val(page);
+		var queryString = $("form").serialize();
+		searchUserId(queryString);
+		
+	    }
+	    
+	    
+	})
+});
+
+function listpay(){
+	$.ajax({
+		url :"/PayServlet",
+		method:"post",
+		data:query,
+		success:function(res){
+			showListPay(res);
+		}
+	})
+}
 
 
+
+$( function() {
+    var jbOffset = $("input[name=userId]").offset();
+    $( window ).scroll( function() {
+      if ( $( document ).scrollTop() > jbOffset.top ) {
+    	  $("input[name=userId]").addClass( 'jbFixed' );
+      }
+      else {
+    	  $("input[name=userId]").removeClass( 'jbFixed' );
+      }
+    });
+  } );
+// */
+
+
+/*
+
+
+	$(window).scroll(function() { 
+		if($(window).scrollTop() == $(document).height() - $(window).height() && flag ==1){
+			flag=0;
+		}
+		
+		if ($(window).scrollTop() >= $(document).height() - $(window).height() && flag ==0) {
+			flag=1;
+			page++;
+			alert("끝");
+		}
+	});
+
+//*/
 
 
 </script>
@@ -137,13 +207,16 @@ border-bottom:none;
 									<tr id="search">
 										<td>확인할 User :</td>
 										<td><input type="text" name="userId" value=""></td>
-										
+										<input type="hidden" name="page" value="1">
 									</tr>
 								</tbody>
 							</table>
 
 						</div>
-
+								<input type="hidden" name="check" value="listPay">
+						
+						
+					</form>
 
 						<div class="field">
 							<table>
@@ -185,8 +258,7 @@ border-bottom:none;
 
 							
 						</ul>
-						<input type="hidden" name="check" value="listPay">
-					</form>
+					
 				</div>
 				
 			</section>

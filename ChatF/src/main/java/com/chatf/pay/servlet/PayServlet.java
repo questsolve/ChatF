@@ -115,6 +115,7 @@ public class PayServlet extends HttpServlet {
 			search.setCurrentPage(1);
 		}
 		
+		
 		search.setPageSize(10);
 		System.out.println(search.getStartRowNum());
 		System.out.println(search.getEndRowNum());
@@ -123,15 +124,19 @@ public class PayServlet extends HttpServlet {
 		List<PayVO> list = paydao.listPay(userId, search);
 			
 		
-		Gson gson = new Gson(); // Or use new GsonBuilder().create();
-		String gsonStr = gson.toJson(list); // serializes target to Json
+		
+		Gson gson = new Gson(); 
+		String gsonStr = gson.toJson(list); 
+		String page = gson.toJson(search);
 		System.out.println(gsonStr); 
-
+		
 		PrintWriter out = response.getWriter();
 		out.println(gsonStr);
 		
-		
-		
+	}
+	
+	
+	private void countPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 	}
 
