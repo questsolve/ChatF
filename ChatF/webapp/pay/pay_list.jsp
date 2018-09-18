@@ -29,7 +29,8 @@
 
 <script>
 
-//키보드 입력 시  
+/////////////////키보드 입력시 마다 해당 값으로 DB 검색///////////////////////////////
+
 $(function(){
 	$("input[name=userId]").keyup(function(){
 		
@@ -39,6 +40,22 @@ $(function(){
 		searchUserId(queryString);
 	});
 });
+
+/////////////////실제로 DB 검색하는 AJAX///////////////////////////////
+
+function searchUserId(query){
+	//alert($("input[name=userId]").val());
+	$.ajax({
+		url :"/PayServlet",
+		method:"post",
+		data:query,
+		success:function(res){
+			showListPay(res);
+		}
+	})
+}
+
+/////////////////검색한 결과값을 화면에 송출///////////////////////////////
 
 function showListPay(data){
 	var jsonData = JSON.parse(data);
@@ -58,38 +75,33 @@ function showListPay(data){
 }
 
 
- 
 
-function searchUserId(query){
-		//alert($("input[name=userId]").val());
-		$.ajax({
-			url :"/PayServlet",
-			method:"post",
-			data:query,
-			success:function(res){
-				showListPay(res);
-				
-			}
-		})
-}
-var flag;
+
+var flag=0;
 var page =1;
-
+var checkId;
 ///* 
+
+/////////////////무한 스크롤로 page처리///////////////////////////////
 $(function () {
 	$(document).scroll(function() {
 	    var maxHeight = $(document).height();
 	    var currentScroll = $(window).scrollTop() + $(window).height();
 		var id = $("input[name=userId]").val();
-	    
-	    if (maxHeight <= currentScroll && !(id ==null || id =="") ) {
+	    checkId =id;
+	    if (maxHeight <= currentScroll && !(id ==null || id =="") && flag==0 ) {
 		//TODO
-		
+		flag==1
 		page++;
 		$("input[name=page]").val(page);
 		var queryString = $("form").serialize();
+		
 		searchUserId(queryString);
 		
+	    }
+	    
+	    if(maxHeight >= currentScroll && flag==1 ) {
+	    	flag=0;
 	    }
 	    
 	    
@@ -109,36 +121,53 @@ function listpay(){
 
 
 
+
+
+
+	
+
+
+
+
+///*
 $( function() {
-    var jbOffset = $("input[name=userId]").offset();
+    var jbOffset = $("#search").offset();
     $( window ).scroll( function() {
       if ( $( document ).scrollTop() > jbOffset.top ) {
-    	  $("input[name=userId]").addClass( 'jbFixed' );
+    	  $("#search").addClass( 'jbFixed' );
+    	  
       }
       else {
-    	  $("input[name=userId]").removeClass( 'jbFixed' );
+    	  $("#search").removeClass( 'jbFixed' );
       }
     });
-  } );
+  });
+  
+$(function(){
+	$(".jbFixed input[name=userId]").keyup(function(){
+		$(".jbFixed input[name=userId]").val("ee")
+	})
+})  
+$(function(){  
+  $(document).on("keyup", ".jbFixed input[name=userId]", function() {
+	  
+	  
+	  //alert($("input[name=page]").val());
+	  //alert($(".jbFixed input[name=userId]").val());
+	  $("#board tr").remove();
+	  $("input[name=page]").val(1);
+	  //alert($("input[name=page]").val());
+	  
+	  var queryString = $("form").serialize();
+	  alert(queryString);
+	  searchUserId(queryString);
+  });
+});
+  
+  
 // */
 
 
-/*
-
-
-	$(window).scroll(function() { 
-		if($(window).scrollTop() == $(document).height() - $(window).height() && flag ==1){
-			flag=0;
-		}
-		
-		if ($(window).scrollTop() >= $(document).height() - $(window).height() && flag ==0) {
-			flag=1;
-			page++;
-			alert("끝");
-		}
-	});
-
-//*/
 
 
 </script>
@@ -151,7 +180,7 @@ $( function() {
 	padding-top:5%;
 
 }
-#search{
+#search tr{
 border-right:none;
 border-left:none;
 border-top:none;
@@ -159,6 +188,13 @@ border-bottom:none;
  
 
 }
+.jbFixed{
+position: fixed;
+top: 0px;
+background-color: #f1f1f1;
+}
+
+
 </style>
 </head>
 <body>
@@ -199,13 +235,13 @@ border-bottom:none;
 
 				<div class="column">
 					
-					
 					<form action="#" method="post">
-						<div>
+						<div id="search">
 							<table>
 								<tbody >
-									<tr id="search">
+									<tr >
 										<td>확인할 User :</td>
+										
 										<td><input type="text" name="userId" value=""></td>
 										<input type="hidden" name="page" value="1">
 									</tr>

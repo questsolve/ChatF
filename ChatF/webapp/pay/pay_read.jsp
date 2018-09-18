@@ -140,7 +140,8 @@
 									<td>
 									<c:if test="${! empty totalPoint}">
 											${totalPoint}
-									</c:if> <c:if test="${ empty totalPoint}">
+									</c:if> 
+									<c:if test="${ empty totalPoint}">
 											12300000	
 									</c:if>
 									</td>
