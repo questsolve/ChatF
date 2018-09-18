@@ -2,6 +2,7 @@ package com.chatf.friend;
 
 public class FriendVO {
 
+
 	private int FriendNo;
 	private String ReceiverId;
 	private String SenderId;
@@ -9,7 +10,9 @@ public class FriendVO {
 	private String UserId;
 	public String getUserId() {
 		return UserId;
+
 	}
+
 	public void setUserId(String userId) {
 		UserId = userId;
 	}
@@ -39,5 +42,6 @@ public class FriendVO {
 	}
 	
 	
+
 
 }
