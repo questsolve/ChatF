@@ -8,12 +8,12 @@ import java.util.ArrayList;
 
 import com.chatf.chat.chatRoom.chatRoomVO;
 import com.chatf.common.DBManager;
-import com.chatf.friend.friendVO;
+import com.chatf.friend.FriendVO;
 
-public class friendDaoImpl implements friendDao {
+public class FriendDaoImpl implements FriendDao {
 
 	@Override
-	public int addFriend(friendVO vo) {
+	public int addFriend(FriendVO vo) {
 
 		Connection conn = null;
 		PreparedStatement pstmt =null;
@@ -39,12 +39,12 @@ public class friendDaoImpl implements friendDao {
 	
 	
 	@Override
-	public void readFriend(friendVO vo) {
+	public void readFriend(FriendVO vo) {
 		Connection conn = null;
 		PreparedStatement pstmt =null;
 		ResultSet rs  = null;
 		DBManager db = new DBManager();
-		ArrayList<friendVO> list = new ArrayList<friendVO>();
+		ArrayList<FriendVO> list = new ArrayList<FriendVO>();
 		try {
 			conn = db.dbConn();
 			pstmt = conn.prepareStatement("select receiver_id, sender_id from friend where receiver_id=? or sender_id=? and friend_flag=?;"); 
@@ -54,7 +54,7 @@ public class friendDaoImpl implements friendDao {
 			
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
-				friendVO mvo = new friendVO();
+				FriendVO mvo = new FriendVO();
 				mvo.setReceiverId(rs.getString("receiver_id"));
 				mvo.setSenderId(rs.getString("sender_id"));
 				
@@ -68,7 +68,7 @@ public class friendDaoImpl implements friendDao {
 	}
 
 	@Override
-	public int updateFriend(friendVO vo) {
+	public int updateFriend(FriendVO vo) {
 		//update friend set friend_flag=1 where friend_no=?;
 			Connection conn = null;
 			PreparedStatement pstmt =null;
@@ -89,5 +89,7 @@ public class friendDaoImpl implements friendDao {
 			}
 			return res;
 			}
+
+
 
 }
