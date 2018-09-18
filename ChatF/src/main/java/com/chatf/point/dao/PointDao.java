@@ -11,5 +11,5 @@ public interface PointDao {
 	public PointVO readPoint(int usage_no);
 	public List<PointVO> listPoint(String userId,Search search);
 	public int readCurrentPointNO(String userId);
-	
+	public int readPoint(String userId) ;
 }

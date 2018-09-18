@@ -160,16 +160,20 @@ public class PointDaoImpl implements PointDao {
 	}
 	
 	public int readPoint(String userId) {
-		int currentUsageNo = 0;
-		//TODO
+		int totalPoint = 0;
 		StringBuilder sb = new StringBuilder();
-		sb.append("SELECT * FROM(");
-		sb.append(" SELECT usage_no");
+		sb.append("SELECT ");
+		sb.append(" ((SELECT SUM(point)");
 		sb.append(" FROM point_usage");
 		sb.append(" WHERE user_id = ?");
-		//TODO ROWNUM 확인 
-		sb.append(" ORDER BY usage_time DESC )");
-		sb.append(" WHERE ROWNUM <2");
+		sb.append(" AND usage_flag = 'add')");
+		
+		sb.append(" -(SELECT NVL(SUM(point),0)");
+		sb.append(" FROM point_usage");
+		sb.append(" WHERE user_id = ?");
+		sb.append(" AND usage_flag = 'use')) AS total");
+		sb.append(" FROM dual");
+		
 		
 		
 		DBManager dbm = new DBManager();
@@ -180,11 +184,12 @@ public class PointDaoImpl implements PointDao {
 			con = dbm.dbConn();
 			pstate = con.prepareStatement(sb.toString());
 			pstate.setString(1,userId);
+			pstate.setString(2,userId);
 			rs = pstate.executeQuery();
 			
 			if(rs.next()) {
-				currentUsageNo = rs.getInt("usage_no");
-				System.out.println("pointDAO : "+currentUsageNo);
+				totalPoint = rs.getInt("total");
+				System.out.println("pointDAO : "+totalPoint);
 			}
 			
 		} catch (SQLException e) {
@@ -192,7 +197,7 @@ public class PointDaoImpl implements PointDao {
 		}
 		
 		
-		return currentUsageNo;
+		return totalPoint;
 	}
 	
 	

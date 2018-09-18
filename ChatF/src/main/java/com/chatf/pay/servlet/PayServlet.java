@@ -81,6 +81,7 @@ public class PayServlet extends HttpServlet {
 		int payNo = payDao.readCurrentPay(currentPointNO);
 		
 		
+		
 		if(res > 0) {
 			response.sendRedirect("/PayServlet?check=readPay&no="+payNo);
 		}
@@ -88,13 +89,30 @@ public class PayServlet extends HttpServlet {
 	}
 	
 	private void readPay(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession(true);
+		User user =(User)session.getAttribute("loginUser");
+		
 		int payNo = Integer.parseInt(request.getParameter("no"));
 		System.out.println(payNo);
+		
 		PayDao payDao = new PayDaoImpl();
 		PayVO pay = payDao.readPay(payNo);
 		
+		PointDao pointDao = new PointDaoImpl();
+		int totalPoint =0;
+		
+
+		if(user == null) {
+			totalPoint = pointDao.readPoint("testuser01");
+			System.out.println("payServlet: "+totalPoint);
+		}else {
+			//TODO 
+			//totalPoint = pointDao.readPoint(user.getUserId);
+			System.out.println("payServlet: "+totalPoint);
+		}
 		
 		request.setAttribute("pay", pay);
+		request.setAttribute("totalPoint", totalPoint);
 		//TODO 현재 포인트 량 확인해서 requestScope에 넘겨주기
 		
 		request.getRequestDispatcher("/pay/pay_read.jsp").forward(request, response);

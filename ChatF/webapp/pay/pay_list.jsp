@@ -90,7 +90,7 @@ $(function () {
 		var id = $("input[name=userId]").val();
 	    checkId =id;
 	    if (maxHeight <= currentScroll && !(id ==null || id =="") && flag==0 ) {
-		//TODO
+		
 		flag==1
 		page++;
 		$("input[name=page]").val(page);
@@ -135,7 +135,6 @@ $( function() {
     $( window ).scroll( function() {
       if ( $( document ).scrollTop() > jbOffset.top ) {
     	  $("#search").addClass( 'jbFixed' );
-    	  
       }
       else {
     	  $("#search").removeClass( 'jbFixed' );
@@ -143,11 +142,7 @@ $( function() {
     });
   });
   
-$(function(){
-	$(".jbFixed input[name=userId]").keyup(function(){
-		$(".jbFixed input[name=userId]").val("ee")
-	})
-})  
+
 $(function(){  
   $(document).on("keyup", ".jbFixed input[name=userId]", function() {
 	  
@@ -241,10 +236,15 @@ background-color: #f1f1f1;
 								<tbody >
 									<tr >
 										<td>확인할 User :</td>
-										
+										<c:if test="${loginUser.user_roll eq a}">
 										<td><input type="text" name="userId" value=""></td>
-										<input type="hidden" name="page" value="1">
+										</c:if>
+										<c:if test="${loginUser.user_roll eq u}">
+										<td>${loginUser.userId}</td>
+										</c:if>
+										
 									</tr>
+										<input type="hidden" name="page" value="1">
 								</tbody>
 							</table>
 

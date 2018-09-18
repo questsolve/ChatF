@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.chatf.common.DBManager;
+import com.chatf.common.Page;
 import com.chatf.common.Search;
 import com.chatf.pay.PayVO;
 import com.chatf.point.PointVO;
@@ -225,13 +226,10 @@ public class PayDaoImpl implements PayDao {
 			dbm.dbClose(con, pstate,rs);
 		}
 
+
+
 		return currnetPayNo;
 	}
 
-	
-	
-	
-	
-	
 	
 }
