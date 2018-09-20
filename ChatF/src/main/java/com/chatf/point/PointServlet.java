@@ -8,12 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.chatf.pay.PayVO;
-import com.chatf.pay.dao.PayDao;
-import com.chatf.pay.dao.PayDaoImpl;
 import com.chatf.point.dao.PointDao;
 import com.chatf.point.dao.PointDaoImpl;
-import com.chatf.user.User;
+import com.chatf.user.UserVO;
 
 /**
  * Servlet implementation class PointServlet
@@ -27,7 +24,6 @@ public class PointServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
@@ -46,7 +42,7 @@ public class PointServlet extends HttpServlet {
 		
 		HttpSession session = request.getSession(true);
 		
-		User user =(User)session.getAttribute("loginUser");
+		UserVO user =(UserVO)session.getAttribute("loginUser");
 		
 		PointDao pointDao = new PointDaoImpl();
 		PointVO pointVO = new PointVO();

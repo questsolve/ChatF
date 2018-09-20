@@ -139,10 +139,10 @@
 					
 						<div class="field half first">
 							<label for="name">
-							<c:if test="${! empty session_user}">
-								${session_user.userId}
+							<c:if test="${! empty loginUser}">
+								${loginUser.userId}
 							</c:if>
-							<c:if test="${ empty session_user}">
+							<c:if test="${ empty loginUser}">
 								userid
 							</c:if>
 							
