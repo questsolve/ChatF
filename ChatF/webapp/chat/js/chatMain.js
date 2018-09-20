@@ -13,7 +13,11 @@
 			onMessage(event)
 		};
 		function onMessage(event) {
-			textarea.value += "상대 : " + event.data + "\n";
+			textarea.value += "상대 : " + event.data + "\n"; 
+			//스크롤바 자동 내리기 
+			const top = $('#messageWindow').prop('scrollHeight');
+			$('#messageWindow').scrollTop(top);
+			//----------------	
 		}
 		function onOpen(event) {
 			textarea.value += "You entered the chat room.\n";
@@ -47,7 +51,9 @@
 			const top = $('#messageWindow').prop('scrollHeight');
 			$('#messageWindow').scrollTop(top);
 			//----------------
-		
+			
+			//TODO 상대방 아이디, 세션에서 가져오기 
+			
 		}
 
 	})
