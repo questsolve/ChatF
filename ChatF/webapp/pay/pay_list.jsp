@@ -196,16 +196,7 @@ background-color: #f1f1f1;
 	<div class="page-wrap">
 
 		<!-- Nav -->
-		<nav id="nav">
-			<ul>
-				<li><a href="index.html" class="active"><span
-						class="icon fa-home"></span></a></li>
-				<li><a href="gallery.html"><span
-						class="icon fa-camera-retro"></span></a></li>
-				<li><a href="generic.html"><span
-						class="icon fa-file-text-o"></span></a></li>
-			</ul>
-		</nav>
+		<jsp:include page="../common/navbar.jsp"></jsp:include>
 
 		<!-- Main -->
 		<section id="main">
