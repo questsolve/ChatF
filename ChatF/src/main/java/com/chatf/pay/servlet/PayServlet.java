@@ -2,7 +2,6 @@ package com.chatf.pay.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -19,10 +18,10 @@ import com.chatf.pay.dao.PayDaoImpl;
 import com.chatf.point.PointVO;
 import com.chatf.point.dao.PointDao;
 import com.chatf.point.dao.PointDaoImpl;
-import com.chatf.user.User;
+import com.chatf.user.UserVO;
 import com.google.gson.Gson;
 
-import oracle.net.aso.p;
+
 
 /**
  * Servlet implementation class PayServlet
@@ -60,7 +59,7 @@ public class PayServlet extends HttpServlet {
 	private void addPay(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(true);
 		PointDao pointDao = new PointDaoImpl();
-		User user =(User)session.getAttribute("loginUser");
+		UserVO user =(UserVO)session.getAttribute("loginUser");
 		int currentPointNO = 0;
 		if(user == null) {
 			currentPointNO = pointDao.readCurrentPointNO("testuser01");
@@ -90,7 +89,7 @@ public class PayServlet extends HttpServlet {
 	
 	private void readPay(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(true);
-		User user =(User)session.getAttribute("loginUser");
+		UserVO user =(UserVO)session.getAttribute("loginUser");
 		
 		int payNo = Integer.parseInt(request.getParameter("no"));
 		System.out.println(payNo);

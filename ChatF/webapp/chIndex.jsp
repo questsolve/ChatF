@@ -21,6 +21,7 @@
 		<div class="page-wrap">
 
 			<jsp:include page="/common/navbar.jsp"></jsp:include>
+			
 
 			<!-- Main -->
 				<section id="main">
