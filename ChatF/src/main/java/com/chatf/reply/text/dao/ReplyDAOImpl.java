@@ -20,7 +20,7 @@ public class ReplyDAOImpl implements ReplyDAO{
         ResultSet rs =null;
         DBManager db = new DBManager();
         int re =0;
-        String sql = "insert into reply(reply_no,user_id,review_no,reply,regdate,active_yn)values(reply_seq.nextval,?,?,?,sysdate,y)";
+        String sql = "insert into reply(reply_no,user_id,review_no,reply,regdate,active_yn)values(reply_seq.nextval,?,?,?,sysdate,'y')";
         
         
         try {
@@ -76,12 +76,14 @@ public class ReplyDAOImpl implements ReplyDAO{
         DBManager db = new DBManager();
         int re =0;
         
-        String sql ="update reply set activity_yn=n where reply_no=?";
+        String sql ="update reply set active_yn='n' where reply_no=?";
         
         try {
         	conn=db.dbConn();
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setInt(1, replyNo);
+		    re=pstmt.executeUpdate();
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
@@ -102,7 +104,7 @@ public class ReplyDAOImpl implements ReplyDAO{
         DBManager db = new DBManager();
 		ArrayList<ReplyVO> list = new ArrayList<ReplyVO>();
 		
-		String sql = "select  user_id, reply, regdate, reply_no from reply where review_no=? and active_yn=y";
+		String sql = "select  user_id, reply, regdate, reply_no from reply where review_no=? and active_yn='y'";
 		
 		try {
 			conn=db.dbConn();

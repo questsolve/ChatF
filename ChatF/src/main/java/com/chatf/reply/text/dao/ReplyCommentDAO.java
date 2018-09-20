@@ -8,7 +8,7 @@ import com.chatf.reply.text.ReplyVO;
 public interface ReplyCommentDAO {
 
 	//대댓글 달기
-	public int addReplyCommnet(ReplyCommentVO vo);
+	public int addReplyCommnet(ReplyCommentVO vo );
 	//대댓글 수정
 	public int updateReplyComment(ReplyCommentVO vo);
 	//대댓글 삭제

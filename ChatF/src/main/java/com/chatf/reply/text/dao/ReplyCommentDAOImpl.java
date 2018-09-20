@@ -19,13 +19,14 @@ public class ReplyCommentDAOImpl implements ReplyCommentDAO{
         ResultSet rs =null;
         DBManager db = new DBManager();
         int re =0;
-        String sql = "insert into reply_comment(comment_no, user_id, reply_comment, regdate,active_yn) values(comment_no.nextval,?,?,sysdate,y) where reply_no=?"; 
+        String sql = "insert into reply_comment(comment_no, user_id, reply_comment, regdate,active_yn,reply_no) values(reply_comment_seq.nextval,?,?,sysdate,'y',?)"; 
         	
         try {
         	conn=db.dbConn();
 			pstmt=conn.prepareStatement(sql);
             pstmt.setString(1, vo.getUserId());
             pstmt.setString(2, vo.getReplyComment());
+            pstmt.setInt(3, vo.getReplyNo());
             re=pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
@@ -44,13 +45,13 @@ public class ReplyCommentDAOImpl implements ReplyCommentDAO{
         DBManager db = new DBManager();
         int re =0;
         
-        String sql = "update reply set comment=?, regdate =sysdate where comment_no=? AND reply_no=? ;";
+        String sql = "update reply_comment set reply_comment=?, regdate =sysdate where comment_no=?  ";
         
         try {
         	conn=db.dbConn();
 			pstmt=conn.prepareStatement(sql);
-			pstmt.setInt(1, vo.getCommentNo());
-			pstmt.setInt(2, vo.getReplyNo());
+			pstmt.setString(1, vo.getReplyComment());
+			pstmt.setInt(2, vo.getCommentNo());
 			re=pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
@@ -71,7 +72,7 @@ public class ReplyCommentDAOImpl implements ReplyCommentDAO{
         DBManager db = new DBManager();
         int re =0;
         
-        String sql ="update  reply_ comment set active_yn=n wherecomment_no=?";
+        String sql ="update reply_comment set active_yn='n' where comment_no=?";
         
         try {
         	conn=db.dbConn();
@@ -96,8 +97,8 @@ public class ReplyCommentDAOImpl implements ReplyCommentDAO{
         DBManager db = new DBManager();
     	ArrayList<ReplyCommentVO> list = new ArrayList<ReplyCommentVO>();
 		
-		String sql = "select  user_id, reply_comment, regdate, comment_no from reply_comment where reply_no=? and active_yn=’y’";
-			
+		String sql = " select user_id, reply_comment, regdate,comment_no from reply_comment where reply_no=? and active_yn='y'";
+		                      
 		
 		try {
 			conn=db.dbConn();
@@ -111,7 +112,7 @@ public class ReplyCommentDAOImpl implements ReplyCommentDAO{
 				vo.setUserId(rs.getString("user_id"));
 				vo.setReplyComment(rs.getString("reply_comment"));
 				vo.setRegdate(rs.getString("regdate"));
-				vo.setCommentNo(rs.getInt("Comment_no"));
+				vo.setCommentNo(rs.getInt("comment_no"));
 				list.add(vo);
 			}
 			
