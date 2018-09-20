@@ -7,18 +7,14 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="../assets/css/main.css" />
+		<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	</head>
 	<body>
 		<div class="page-wrap">
 
-			<!-- Nav -->
-				<nav id="nav">
-					<ul>
-						<li><a href="index.html"><span class="icon fa-home"></span></a></li>
-						<li><a href="gallery.html" class="active"><span class="icon fa-camera-retro"></span></a></li>
-						<li><a href="generic.html"><span class="icon fa-file-text-o"></span></a></li>
-					</ul>
-				</nav>
+						<jsp:include page="../common/navbar.jsp"></jsp:include>
+
 
 			<!-- Main -->
 				<section id="main">

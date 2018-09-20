@@ -1,7 +1,7 @@
 
 	$(function() {
 		var textarea = document.getElementById("messageWindow");
-		var webSocket = new WebSocket('ws://localhost/ChatF/broadcasting');
+		var webSocket = new WebSocket('ws://localhost/broadcasting');
 		var inputMessage = document.getElementById('inputMessage');
 		webSocket.onerror = function(event) {
 			onError(event)
