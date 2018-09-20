@@ -5,11 +5,11 @@
 $(function(){
 	
 	$("#login").on("click",function(){
-		alert("login");
+		dialog.dialog("open");
 	});
 	
 	$("#logout").on("click",function(){
-		alert("logout");
+		self.location = "/UserServlet?info=logout"
 	});
 	
 	
