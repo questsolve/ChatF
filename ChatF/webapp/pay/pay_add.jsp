@@ -107,14 +107,7 @@
 	<div class="page-wrap">
 
 		<!-- Nav -->
-		<nav id="nav">
-			<ul>
-				<li><a href="index.html" class="active"><span
-						class="icon fa-home"></span></a></li>
-				<li><a href="gallery.html"><span class="icon fa-camera-retro"></span></a></li>
-				<li><a href="generic.html"><span class="icon fa-file-text-o"></span></a></li>
-			</ul>
-		</nav>
+		<jsp:include page="../common/navbar.jsp"></jsp:include>
 
 		<!-- Main -->
 		<section id="main">
@@ -146,10 +139,10 @@
 					
 						<div class="field half first">
 							<label for="name">
-							<c:if test="${! empty session_user}">
-								${session_user.userId}
+							<c:if test="${! empty loginUser}">
+								${loginUser.userId}
 							</c:if>
-							<c:if test="${ empty session_user}">
+							<c:if test="${ empty loginUser}">
 								userid
 							</c:if>
 							

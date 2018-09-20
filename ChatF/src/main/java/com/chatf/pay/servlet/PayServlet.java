@@ -2,7 +2,6 @@ package com.chatf.pay.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -19,10 +18,10 @@ import com.chatf.pay.dao.PayDaoImpl;
 import com.chatf.point.PointVO;
 import com.chatf.point.dao.PointDao;
 import com.chatf.point.dao.PointDaoImpl;
-import com.chatf.user.User;
+import com.chatf.user.UserVO;
 import com.google.gson.Gson;
 
-import oracle.net.aso.p;
+
 
 /**
  * Servlet implementation class PayServlet
@@ -60,7 +59,7 @@ public class PayServlet extends HttpServlet {
 	private void addPay(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(true);
 		PointDao pointDao = new PointDaoImpl();
-		User user =(User)session.getAttribute("loginUser");
+		UserVO user =(UserVO)session.getAttribute("loginUser");
 		int currentPointNO = 0;
 		if(user == null) {
 			currentPointNO = pointDao.readCurrentPointNO("testuser01");
@@ -81,6 +80,7 @@ public class PayServlet extends HttpServlet {
 		int payNo = payDao.readCurrentPay(currentPointNO);
 		
 		
+		
 		if(res > 0) {
 			response.sendRedirect("/PayServlet?check=readPay&no="+payNo);
 		}
@@ -88,13 +88,30 @@ public class PayServlet extends HttpServlet {
 	}
 	
 	private void readPay(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession(true);
+		UserVO user =(UserVO)session.getAttribute("loginUser");
+		
 		int payNo = Integer.parseInt(request.getParameter("no"));
 		System.out.println(payNo);
+		
 		PayDao payDao = new PayDaoImpl();
 		PayVO pay = payDao.readPay(payNo);
 		
+		PointDao pointDao = new PointDaoImpl();
+		int totalPoint =0;
+		
+
+		if(user == null) {
+			totalPoint = pointDao.readPoint("testuser01");
+			System.out.println("payServlet: "+totalPoint);
+		}else {
+			//TODO 
+			//totalPoint = pointDao.readPoint(user.getUserId);
+			System.out.println("payServlet: "+totalPoint);
+		}
 		
 		request.setAttribute("pay", pay);
+		request.setAttribute("totalPoint", totalPoint);
 		//TODO 현재 포인트 량 확인해서 requestScope에 넘겨주기
 		
 		request.getRequestDispatcher("/pay/pay_read.jsp").forward(request, response);

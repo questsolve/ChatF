@@ -109,7 +109,7 @@ public class PayDaoImpl implements PayDao {
 	public List<PayVO> listPay(String userId,Search search){
 		List<PayVO> payList = new ArrayList<PayVO>();
 
-		int total =0;
+		
 		StringBuilder sb = new StringBuilder();
 				
 		sb.append("SELECT * ");

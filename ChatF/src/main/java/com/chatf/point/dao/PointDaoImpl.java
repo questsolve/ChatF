@@ -14,12 +14,11 @@ import com.chatf.point.PointVO;
 public class PointDaoImpl implements PointDao {
 
 	public PointDaoImpl() {
-		// TODO Auto-generated constructor stub
+
 	}
 
 	public int addPoint(PointVO point) {
 		int res = 0;
-		//TODO
 		StringBuilder sb = new StringBuilder();
 		sb.append("INSERT INTO");
 		sb.append(" point_usage(usage_no,chat_server_no,user_id,point, usage_flag,usage_time)");
@@ -38,7 +37,6 @@ public class PointDaoImpl implements PointDao {
 			
 			res = pstate.executeUpdate();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -48,7 +46,6 @@ public class PointDaoImpl implements PointDao {
 	
 	public PointVO readPoint(int usage_no) {
 		PointVO point = new PointVO();
-		//TODO
 		StringBuilder sb = new StringBuilder();
 		sb.append("SELECT usage_no, user_id,chat_server_no,point,usage_flag,TO_CHAR(usage_time,'YYYY/MM/DD') AS usage_time");
 		sb.append(" FROM point_usage");
@@ -76,7 +73,6 @@ public class PointDaoImpl implements PointDao {
 			}
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -87,7 +83,6 @@ public class PointDaoImpl implements PointDao {
 	public List<PointVO> listPoint(String userId,Search search){
 		List<PointVO> pointList = new ArrayList<PointVO>();
 		StringBuilder sb = new StringBuilder();
-		
 		sb.append("SELECT * ");
 		sb.append(" FROM (");
 		sb.append(" SELECT ROWNUM AS row_no, inner.*");
@@ -123,7 +118,6 @@ public class PointDaoImpl implements PointDao {
 			}
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -133,13 +127,11 @@ public class PointDaoImpl implements PointDao {
 	
 	public int readCurrentPointNO(String userId) {
 		int currentUsageNo = 0;
-		//TODO
 		StringBuilder sb = new StringBuilder();
 		sb.append("SELECT * FROM(");
 		sb.append(" SELECT usage_no");
 		sb.append(" FROM point_usage");
 		sb.append(" WHERE user_id = ?");
-		//TODO ROWNUM 확인 
 		sb.append(" ORDER BY usage_time DESC )");
 		sb.append(" WHERE ROWNUM <2");
 		
@@ -160,13 +152,55 @@ public class PointDaoImpl implements PointDao {
 			}
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		
 		return currentUsageNo;
 	}
+	
+	public int readPoint(String userId) {
+		int totalPoint = 0;
+		StringBuilder sb = new StringBuilder();
+		sb.append("SELECT ");
+		sb.append(" ((SELECT SUM(point)");
+		sb.append(" FROM point_usage");
+		sb.append(" WHERE user_id = ?");
+		sb.append(" AND usage_flag = 'add')");
+		
+		sb.append(" -(SELECT NVL(SUM(point),0)");
+		sb.append(" FROM point_usage");
+		sb.append(" WHERE user_id = ?");
+		sb.append(" AND usage_flag = 'use')) AS total");
+		sb.append(" FROM dual");
+		
+		
+		
+		DBManager dbm = new DBManager();
+		Connection con = null;
+		PreparedStatement pstate = null;
+		ResultSet rs = null;
+		try {
+			con = dbm.dbConn();
+			pstate = con.prepareStatement(sb.toString());
+			pstate.setString(1,userId);
+			pstate.setString(2,userId);
+			rs = pstate.executeQuery();
+			
+			if(rs.next()) {
+				totalPoint = rs.getInt("total");
+				System.out.println("pointDAO : "+totalPoint);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+		return totalPoint;
+	}
+	
+	
 	
 	
 	
