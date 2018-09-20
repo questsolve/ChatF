@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.chatf.common.DBManager;
+import com.chatf.common.Search;
 import com.chatf.point.PointVO;
 
 public class PointDaoImpl implements PointDao {
@@ -83,12 +84,20 @@ public class PointDaoImpl implements PointDao {
 		return point;
 	}
 	
-	public List<PointVO> listPoint(String userId){
+	public List<PointVO> listPoint(String userId,Search search){
 		List<PointVO> pointList = new ArrayList<PointVO>();
 		StringBuilder sb = new StringBuilder();
-		sb.append("SELECT usage_no, user_id,chat_server_no,point,usage_flag,TO_CHAR(usage_time,'YYYY/MM/DD') AS usage_time");
+		
+		sb.append("SELECT * ");
+		sb.append(" FROM (");
+		sb.append(" SELECT ROWNUM AS row_no, inner.*");
+		sb.append(" FROM(");
+		sb.append(" SELECT usage_no, user_id,chat_server_no,point,usage_flag,TO_CHAR(usage_time,'YYYY/MM/DD') AS usage_time");
 		sb.append(" FROM point_usage");
 		sb.append(" WHERE user_id = ?");
+		sb.append(" ) inner");
+		sb.append(" )");
+		sb.append(" WHERE row_no BETWEEN ? AND ?");
 		
 		
 		DBManager dbm = new DBManager();
@@ -99,6 +108,8 @@ public class PointDaoImpl implements PointDao {
 			con = dbm.dbConn();
 			pstate = con.prepareStatement(sb.toString());
 			pstate.setString(1, userId);
+			pstate.setInt(2, search.getStartRowNum());
+			pstate.setInt(3, search.getEndRowNum());
 			rs = pstate.executeQuery();
 			
 			while(rs.next()) {
@@ -118,6 +129,45 @@ public class PointDaoImpl implements PointDao {
 		
 		return pointList;
 	}
+	
+	
+	public int readCurrentPointNO(String userId) {
+		int currentUsageNo = 0;
+		//TODO
+		StringBuilder sb = new StringBuilder();
+		sb.append("SELECT * FROM(");
+		sb.append(" SELECT usage_no");
+		sb.append(" FROM point_usage");
+		sb.append(" WHERE user_id = ?");
+		//TODO ROWNUM 확인 
+		sb.append(" ORDER BY usage_time DESC )");
+		sb.append(" WHERE ROWNUM <2");
+		
+		
+		DBManager dbm = new DBManager();
+		Connection con = null;
+		PreparedStatement pstate = null;
+		ResultSet rs = null;
+		try {
+			con = dbm.dbConn();
+			pstate = con.prepareStatement(sb.toString());
+			pstate.setString(1,userId);
+			rs = pstate.executeQuery();
+			
+			if(rs.next()) {
+				currentUsageNo = rs.getInt("usage_no");
+				System.out.println("pointDAO : "+currentUsageNo);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return currentUsageNo;
+	}
+	
 	
 	
 	

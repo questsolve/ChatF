@@ -16,6 +16,7 @@ public class Page {
 	///Constructor
 	public Page() {
 	}
+	
 	public Page( int currentPage, int totalCount,	int pageUnit, int pageSize ) {
 		this.totalCount = totalCount;
 		this.pageUnit = pageUnit;
