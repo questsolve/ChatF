@@ -2,41 +2,46 @@ package com.chatf.friend;
 
 public class FriendVO {
 
-	private int friendNo;
-	private String receiverId;
-	private String senderId;
-	private String friendFlag;
-	private String userId;
-	
+
+	private int FriendNo;
+	private String ReceiverId;
+	private String SenderId;
+	private String FriendFlag;
+	private String UserId;
+	public String getUserId() {
+		return UserId;
+
+	}
+
+	public void setUserId(String userId) {
+		UserId = userId;
+	}
 	public int getFriendNo() {
-		return friendNo;
+		return FriendNo;
 	}
 	public void setFriendNo(int friendNo) {
-		this.friendNo = friendNo;
+		FriendNo = friendNo;
 	}
 	public String getReceiverId() {
-		return receiverId;
+		return ReceiverId;
 	}
 	public void setReceiverId(String receiverId) {
-		this.receiverId = receiverId;
+		ReceiverId = receiverId;
 	}
 	public String getSenderId() {
-		return senderId;
+		return SenderId;
 	}
 	public void setSenderId(String senderId) {
-		this.senderId = senderId;
+		SenderId = senderId;
 	}
 	public String getFriendFlag() {
-		return friendFlag;
+		return FriendFlag;
 	}
 	public void setFriendFlag(String friendFlag) {
-		this.friendFlag = friendFlag;
+		FriendFlag = friendFlag;
 	}
-	public String getUserId() {
-		return userId;
-	}
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-		
+	
+	
+
+
 }

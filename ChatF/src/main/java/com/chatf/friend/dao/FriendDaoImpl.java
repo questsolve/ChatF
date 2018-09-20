@@ -90,4 +90,5 @@ public class FriendDaoImpl implements FriendDao {
 			return res;
 			}
 
+
 }
