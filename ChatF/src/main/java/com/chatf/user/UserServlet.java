@@ -104,7 +104,7 @@ public class UserServlet extends HttpServlet {
 			mvo.setUserId("user_id");
 			
 			int res = mdao.delete(mvo);
-			response.sendRedirect("/chatf/chatf_login.jsp");
+			response.sendRedirect("/chatf/	login.jsp");
 		/*} else if(info.equals("logout")) {
 		  HttpSession session = request.getSession();
 		  session.invalidate();
