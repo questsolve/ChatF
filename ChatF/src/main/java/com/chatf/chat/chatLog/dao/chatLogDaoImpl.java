@@ -59,18 +59,23 @@ public class chatLogDaoImpl implements chatLogDao {
 		try {
 
 			conn = db.dbConn();
-			pstmt = conn.prepareStatement("insert into chat_log(log_no, user_id, chat_server_no, chat_text, chat_time, upload_file, upload_map_x, upload_map_y) \r\n" + 
-					"values(log_seq.nextval, ?,?,?, sysdate, ?, ?, ?);");
+			pstmt = conn.prepareStatement("INSERT INTO chat_log (\r\n" + 
+					"LOG_NO,\r\n" + 
+					"USER_ID,\r\n" + 
+					"CHAT_SERVER_NO,\r\n" + 
+					"CHAT_TEXT,\r\n" + 
+					"CHAT_TIME,\r\n" + 
+					"UPLOAD_FILE,\r\n" + 
+					"UPLOAD_MAP_X,\r\n" + 
+					"UPLOAD_MAP_Y)\r\n" + 
+					"VALUES (chat_log_seq.nextval,?,?,?,sysdate, null, null, null)");
 			pstmt.setString(1, mvo.getUserId());
 			pstmt.setInt(2, mvo.getChatServerNo());
 			pstmt.setString(3, mvo.getChatText());
-			pstmt.setString(4, mvo.getUploadFile());
-			pstmt.setString(5, mvo.getUploadMapX());
-			pstmt.setString(6, mvo.getUploadMapY());
 			
 			res = pstmt.executeUpdate();
 
-			//System.out.println("chatLog 에"+ res +"건 add 완료");
+			System.out.println("chatLog 에"+ res +"건 add 완료");
 		
 			
 		} catch (SQLException e) {

@@ -1,7 +1,7 @@
 package com.chatf.user;
 
 import java.io.IOException;
-
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -38,7 +38,7 @@ public class UserServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String info = request.getParameter("info");
-		System.out.println("info");
+		
 		if(info.equals("addUser")) {
 		
 			addUser(request, response);
@@ -68,7 +68,31 @@ public class UserServlet extends HttpServlet {
 	
 	private void addUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("add");
-		//TODO	
+		System.out.println("addUser");
+		String userId = request.getParameter("userId");
+		String password = request.getParameter("password");
+		String password2 = request.getParameter("password2");
+		String email = request.getParameter("email");
+		String sendEmail = request.getParameter("sendEmail"); //???
+		String code = request.getParameter("code");
+		String checkCode = request.getParameter("checkCode"); //>>>>
+		
+		UserVO vo = new UserVO();
+		vo.setUserId(userId);
+		vo.setUserPw(password);
+		vo.setUserPw(password2);
+		vo.setUserPw(email);
+		vo.setUserPw(code);
+		System.out.println(vo.toString());
+		
+		UserDAO dao = new UserDAOImpl();
+		int res = dao.adduser(vo);
+		PrintWriter out = response.getWriter();
+
+		response.setContentType("text/html; charset=euc-kr");
+		out.println("<script language='javascript'>alert('sign success')</script>");
+		response.sendRedirect("chIndexOrigin.jsp");
+		
 	}
 	
 	private void readUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -102,19 +126,15 @@ public class UserServlet extends HttpServlet {
 			System.out.println("로그인 실패");
 		}
 		
-		response.sendRedirect("chIndex.jsp");
-		
-		
-	}
+		response.sendRedirect("chIndexOrigin.jsp");	}
 	
 	private void logout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(true);
 		System.out.println("logOut");
 		
 		session.removeAttribute("loginUser");
-		response.sendRedirect("chIndex.jsp");
+		response.sendRedirect("chIndexOrigin.jsp");
 	}
 	
 	
 }
-

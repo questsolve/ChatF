@@ -108,7 +108,7 @@ public class PayDaoImpl implements PayDao {
 
 	public List<PayVO> listPay(String userId,Search search){
 		List<PayVO> payList = new ArrayList<PayVO>();
-
+		System.out.println(userId+"paydaoImpl");
 		
 		StringBuilder sb = new StringBuilder();
 				

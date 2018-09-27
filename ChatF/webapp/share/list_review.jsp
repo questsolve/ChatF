@@ -1,5 +1,9 @@
+<%@page import="com.chatf.review.ReviewVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"
+    import="java.util.ArrayList,
+           com.chatf.review.ReviewVO"
+    %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
@@ -9,9 +13,14 @@
 		<link rel="stylesheet" href="../assets/css/main.css" />
 		<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 	</head>
+
 	<body>
-		<div class="page-wrap">
+	<%
+		ArrayList<ReviewVO> list = (ArrayList<ReviewVO>) request.getAttribute("keylist");
+	%>
+	<div class="page-wrap">
 
 						<jsp:include page="../common/navbar.jsp"></jsp:include>
 
@@ -21,7 +30,7 @@
 
 					<!-- Header -->
 						<header id="header">
-							<div><li><a href="write.jsp" class="button">WRITE</a></li></div>
+							<div><li><a href="writepage.jsp" class="button">WRITE</a></li></div>
 						</header>
 
 					<!-- Gallery -->
@@ -35,54 +44,51 @@
 										<header>
 											<h1>REVIEW</h1>
 											<ul class="tabs">
-											    <li><a href="#" data-tag="BEST" class="button active">BEST</a></li>
-												<li><a href="#" data-tag="all" class="button">KANTO</a></li>
-												<li><a href="#" data-tag="people" class="button">KANSAI</a></li>
+											    <li><a href="#" data-tag="ALL" class="button active">ALL</a></li>
+												<li><a href="#" data-tag="KANTO" class="button">KANTO</a></li>
+												<li><a href="#" data-tag="KANSAI" class="button">KANSAI</a></li>
 												<li><a href="#" data-tag="place" class="button">HOKKAIDO</a></li>
-												<li><a href="#" data-tag="thing" class="button">KYUSHU</a></li>
+												<li><a href="#" data-tag="KYUSHU" class="button">KYUSHU</a></li>
 												
 						
 						</ul>
 										</header>
 
 										<div class="content">
-											<div class="media all people">
-												<a href="../images/fulls/01.jpg"><img src="../images/thumbs/01.jpg" alt="" title="This right here is a caption." /></a>
-											</div>
-											<div class="media all place">
-												<a href="../images/fulls/05.jpg"><img src="../images/thumbs/05.jpg" alt="" title="This right here is a caption." /></a>
-											</div>
-											<div class="media all thing">
-												<a href="../images/fulls/09.jpg"><img src="../images/thumbs/09.jpg" alt="" title="This right here is a caption." /></a>
-											</div>
-											<div class="media all people">
-												<a href="../images/fulls/02.jpg"><img src="../images/thumbs/02.jpg" alt="" title="This right here is a caption." /></a>
-											</div>
-											<div class="media all place">
-												<a href="../images/fulls/06.jpg"><img src="../images/thumbs/06.jpg" alt="" title="This right here is a caption." /></a>
-											</div>
-											<div class="media all thing">
-												<a href="../images/fulls/10.jpg"><img src="../images/thumbs/10.jpg" alt="" title="This right here is a caption." /></a>
-											</div>
-											<div class="media all people">
-												<a href="../images/fulls/03.jpg"><img src="../images/thumbs/03.jpg" alt="" title="This right here is a caption." /></a>
-											</div>
-											<div class="media all place">
-												<a href="../images/fulls/07.jpg"><img src="../images/thumbs/07.jpg" alt="" title="This right here is a caption." /></a>
-											</div>
-											<div class="media all thing">
-												<a href="../images/fulls/11.jpg"><img src="../images/thumbs/11.jpg" alt="" title="This right here is a caption." /></a>
-											</div>
-											<div class="media all people">
-												<a href="../images/fulls/04.jpg"><img src="../images/thumbs/04.jpg" alt="" title="This right here is a caption." /></a>
-											</div>
-											<div class="media all place">
-												<a href="../images/fulls/08.jpg"><img src="../images/thumbs/08.jpg" alt="" title="This right here is a caption." /></a>
-											</div>
-											<div class="media all thing">
-												<a href="../images/fulls/12.jpg"><img src="../images/thumbs/12.jpg" alt="" title="This right here is a caption." /></a>
-											</div>
-										</div>
+											 <table>
+            <thead>
+                <tr>
+                    <th>REVIEWNo</th>
+                    <th>LOCAL</th>
+                    <th>TAG</th>
+                    <th>TITLE</th>
+                    <th>Created&nbsp;On</th>
+                    <th>USER&nbsp;ID</th>
+                    <th>LIKE</th>
+                </tr>
+            </thead>
+            <tbody>
+            <%--  <% for(int i=0; i<list.size(); i++) { %>
+                <tr>
+                    <td><%=list.get(i).getReviewNo() %></td>
+                    <td><%=list.get(i).getLocalCode() %></td>
+                    <td><%=list.get(i).getTagCode() %></td>
+                    <td><a href="#"><%=list.get(i).getReviewTitle()%></a></td>
+                    <td>04/10/2013<%=list.get(i).getWriteDate() %></td>
+                    <td><%=list.get(i).getUserId() %></td>
+                    
+           <%} %> 
+                </tr> --%>
+                <tr data-status="inactive">
+                    <td>2</td>
+                    <td><a href="#">quisquamut.net</a></td>
+                    <td>05/08/2014</td>
+                    <td><span class="label label-warning">Inactive</span></td>
+                    <td>Australia</td>
+                    <td><a href="#" class="btn btn-sm manage">Manage</a></td>
+                </tr>
+            </tbody>
+        </table>
 								</div>
 
 		<!-- Scripts -->

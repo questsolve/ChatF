@@ -14,7 +14,7 @@ $(function(){
 	
 	
 	$("#chat").on("click",function(){
-		self.location = "/chIndex.jsp"
+		self.location = "/chIndexOrigin.jsp"
 	});
 	
 	$("#test").on("click",function(){

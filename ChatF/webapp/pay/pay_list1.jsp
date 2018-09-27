@@ -28,118 +28,161 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <script>
+
+/////////////////키보드 입력시 마다 해당 값으로 DB 검색///////////////////////////////
+
 $(function(){
-	var dialog
-
-	dialog = $("#dialog-form").dialog({
-		autoOpen : false,
-		height : 400,
-		width : 350,
-		modal : true,
+	$("input[name=userId]").keyup(function(){
+		$("#board tr").remove();
+		var queryString = $("form").serialize();
+		
+		
+		searchUserId(queryString);
 	});
+});
 
-	var page = 1;
-	var flag= 0;
+/////////////////실제로 DB 검색하는 AJAX///////////////////////////////
+
+function searchUserId(query){
+	//alert($("input[name=userId]").val());
+	$.ajax({
+		url :"/PayServlet",
+		method:"post",
+		data:query,
+		success:function(res){
+			showListPay(res);
+		}
+	})
+}
+
+/////////////////검색한 결과값을 화면에 송출///////////////////////////////
+
+function showListPay(data){
+	var jsonData = JSON.parse(data);
+	var htmlStr ="";
+	$.map(jsonData, mapCallback);
+	function mapCallback( v,  i) { 
+		htmlStr += "<tr>"
+		htmlStr +="<td>"+v.payNo+"</td>";
+		htmlStr += "<td>"+v.payDate+"</td>";
+		htmlStr += "<td>"+v.price+"</td>";
+		htmlStr += "<td>"+v.payFlag+"</td>";
+		htmlStr += "<input type='hidden' name='payNo' value='"+v.payNo+"'>"
+		htmlStr += "</tr>"
+	}
 	
+	
+	$("#board").append(htmlStr);
+}
+
+
+
+
+var flag=0;
+var page =1;
+var checkId;
+///* 
+
+/////////////////무한 스크롤로 page처리///////////////////////////////
+$(function () {
 	$(document).scroll(function() {
 	    var maxHeight = $(document).height();
 	    var currentScroll = $(window).scrollTop() + $(window).height();
-	    var id = $("input[name=userId]").val();
+		var id = $("input[name=userId]").val();
 	    checkId =id;
-		if (maxHeight <= currentScroll && flag==0 ) {
+	    if (maxHeight <= currentScroll && !(id ==null || id =="") && flag==0 ) {
 		
-			flag==1
-			page++;
-			$("input[name=page]").val(page);
-			var queryString = $("form").serialize();
-			 listPayAjax(queryString);
+		flag==1
+		page++;
+		$("input[name=page]").val(page);
+		var queryString = $("form").serialize();
+		
+		searchUserId(queryString);
 		
 	    }
 	    
 	    if(maxHeight >= currentScroll && flag==1 ) {
 	    	flag=0;
-	    	
 	    }
 	    
 	    
-	});
+	})
+});
+
+function listpay(){
+	$.ajax({
+		url :"/PayServlet",
+		method:"post",
+		data:query,
+		success:function(res){
+			showListPay(res);
+		}
+	})
+}
+
+
+$(function(){
+	var userRoll = '${loginUser.userRoll}';
 	
-	function listPayAjax(query){
+	if(userRoll == "" || userRoll==null){
+		//alert("로그인으로 던지기");
+	}else{
+		var userId = "${loginUser.userId}";
+		var check = "listPay_ajax";
+		alert(check);
 		$.ajax({
 			url :"/PayServlet",
-			method:"post",
-			data:query,
+			method:"POST",
+			data:"userId="+userId+"&check ="+check,
 			success:function(res){
 				showListPay(res);
 			}
 		})
 	}
+})
+
+
+
 	
-	
-	function showListPay(data){
-		var jsonData = JSON.parse(data);
-		var htmlStr ="";
-		$.map(jsonData, mapCallback);
-		function mapCallback( v,  i) { 
-			htmlStr += "<tr>"
-			htmlStr +="<td>"+v.payNo+"</td>";
-			htmlStr += "<td>"+v.payDate+"</td>";
-			htmlStr += "<td>"+v.price+"</td>";
-			htmlStr += "<td>"+v.payFlag+"</td>";
-			htmlStr += "<input type='hidden' name='payNo' value='"+v.payNo+"'>"
-			htmlStr += "</tr>"
-		}
-		
-		
-		$("#board").append(htmlStr);
-	}
-	
-	
-	 $(document).on("keyup", ".jbFixed input[name=userId]", function() {
-		$("#board > tr").remove();
-		var userId = $("input[name=userId]").val();
-			
-		$("input[name=searchUser]").val(userId);
-		
-		var queryString = $("form").serialize();
-		searchUserId(queryString);
-	  });
-	
-	
-	 $("input[name=userId]").keyup(function(){
-		$("#board > tr").remove();
-		var userId = $("input[name=userId]").val();
-		$("input[name=searchUser]").val(userId);
-		$("input[name=page]").val(1);
-		var queryString = $("form").serialize();
-		searchUserId(queryString);
-	});
-	 
-	 
-	 function searchUserId(query){
-			
-			$.ajax({
-				url :"/PayServlet",
-				method:"post",
-				data:query,
-				success:function(res){
-					showListPay(res);
-				}
-			})
-		}
-	 
-	 
-	
-	var jbOffset = $("#search").offset();
-	$( window ).scroll( function() {
-		if ( $( document ).scrollTop() > jbOffset.top ) {
-	    	$("#search").addClass( 'jbFixed' );
-	    }
-	    else {
-	    	$("#search").removeClass( 'jbFixed' );
-	    }
-	});
-	
+
+
+
+
+///*
+$( function() {
+    var jbOffset = $("#search").offset();
+    $( window ).scroll( function() {
+      if ( $( document ).scrollTop() > jbOffset.top ) {
+    	  $("#search").addClass( 'jbFixed' );
+      }
+      else {
+    	  $("#search").removeClass( 'jbFixed' );
+      }
+    });
+  });
+  
+
+$(function(){  
+  $(document).on("keyup", ".jbFixed input[name=userId]", function() {
+	  
+	  
+	  //alert($("input[name=page]").val());
+	  //alert($(".jbFixed input[name=userId]").val());
+	  $("#board tr").remove();
+	  $("input[name=page]").val(1);
+	  //alert($("input[name=page]").val());
+	  
+	  var queryString = $("form").serialize();
+	  alert(queryString);
+	  searchUserId(queryString);
+  });
+});
+  
+  
+// */
+/////////////////////////상세 결제 내역 보기///////////////////////////////////////////////
+var payNo;
+$(function(){
 	$(document).on("click","#board tr",function(e){
 		//payNo = $($("#board tr td")[$("#board").index(this)]).val();
 		//payNo = $($("input[name=payNo]")[$(".payNo tr").index(this)]).val();
@@ -186,10 +229,17 @@ $(function(){
 		$("#payFlagTr").append("<td id='ajaxPayFlag'>"+payData.payFlag+"</td>");
 		$("#payDateTr").append("<td id='ajaxPayDate'>"+payData.payDate+"</td>");
 	}
-	 
-});
 
+		var dialog, form,
 
+		dialog = $("#dialog-form").dialog({
+			autoOpen : false,
+			height : 400,
+			width : 350,
+			modal : true,
+		});
+
+	});
 </script>
 
 
@@ -212,7 +262,6 @@ border-bottom:none;
 position: fixed;
 top: 0px;
 background-color: #f1f1f1;
-border: 3px solid black;
 }
 
 
@@ -257,8 +306,7 @@ border: 3px solid black;
 										<td><input type="text" name="userId" value=""></td>
 										</c:if>
 										<c:if test="${loginUser.userRoll =='u'}">
-										<td><input type="text" name="userId" value="${loginUser.userId}" readonly="readonly"></td>
-										 
+										<td>${loginUser.userId}</td>
 										</c:if>
 										
 									</tr>
@@ -267,7 +315,6 @@ border: 3px solid black;
 							</table>
 
 						</div>
-								<input type="hidden" name="searchUser" value="">
 								<input type="hidden" name="check" value="listPay_ajax">
 						
 						
