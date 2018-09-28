@@ -9,6 +9,7 @@ import java.util.List;
 
 import com.chatf.common.DBManager;
 import com.chatf.common.Page;
+import com.chatf.common.Search;
 import com.chatf.pay.PayVO;
 import com.chatf.point.PointVO;
 
@@ -104,19 +105,26 @@ public class PayDaoImpl implements PayDao {
 
 
 
-	//TODO
-	public List<PayVO> listPay(String userId,Page page){
+
+	public List<PayVO> listPay(String userId,Search search){
 		List<PayVO> payList = new ArrayList<PayVO>();
 
-		int total =0;
+		
 		StringBuilder sb = new StringBuilder();
-		sb.append("SELECT");
+				
+		sb.append("SELECT * ");
+		sb.append(" FROM (");
+		sb.append(" SELECT ROWNUM AS row_no, inner.*");
+		sb.append(" FROM (");
+		sb.append(" SELECT");
 		sb.append(" pay_no,u.usage_no,pay_way,price,TO_CHAR(pay_date,'YYYY/MM/DD') AS pay_date,pay_flag");
 		sb.append(" FROM");
 		sb.append(" pay p, point_usage u");
 		sb.append(" WHERE p.usage_no = u.usage_no AND");
 		sb.append(" u.user_id = ?");
-		
+		sb.append(" ) inner");
+		sb.append(" )");
+		sb.append(" WHERE row_no BETWEEN ? AND ?");
 		
 		DBManager dbm = new DBManager();
 		Connection con =null;
@@ -126,8 +134,9 @@ public class PayDaoImpl implements PayDao {
 			con = dbm.dbConn();
 			pstate = con.prepareStatement(sb.toString());
 			pstate.setString(1, userId);
-			total = listCount(sb.toString(),userId);
-			System.out.println(total);
+			pstate.setInt(2, search.getStartRowNum());
+			pstate.setInt(3, search.getEndRowNum());
+			
 			rs = pstate.executeQuery();
 			
 			while(rs.next()) {
@@ -159,11 +168,13 @@ public class PayDaoImpl implements PayDao {
 		return payList;
 	}
 	
-	private int listCount(String sql,String userId) {
+	public int listCount(String userId) {
 		int rowCount =0;
 		StringBuilder sb = new StringBuilder();
 		sb.append("SELECT COUNT(1) AS cnt");
-		sb.append(" FROM (").append(sql).append(")");
+		sb.append(" FROM pay p, point_usage u");
+		sb.append(" WHERE p.usage_no = u.usage_no AND");
+		sb.append(" u.user_id = ?");
 		
 		DBManager dbm = new DBManager();
 		Connection con =null;
@@ -185,6 +196,40 @@ public class PayDaoImpl implements PayDao {
 		return rowCount;
 	}
 	
+	public int readCurrentPay(int usage_no) {
+		int currnetPayNo =0;
+		StringBuilder sb = new StringBuilder();
+		sb.append("SELECT * FROM (");
+		sb.append(" SELECT pay_no");
+		sb.append(" FROM pay");
+		sb.append(" WHERE usage_no = ?");
+		sb.append(" ORDER BY pay_no DESC )");
+		sb.append(" WHERE ROWNUM < 2");
+
+		DBManager dbm = new DBManager();
+		Connection con =null;
+		PreparedStatement pstate = null;
+		ResultSet rs = null;
+		try {
+			con = dbm.dbConn();
+			pstate = con.prepareStatement(sb.toString());
+			pstate.setInt(1, usage_no);
+			rs = pstate.executeQuery();
+
+			if(rs.next()) {
+				currnetPayNo = rs.getInt("pay_no");
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			dbm.dbClose(con, pstate,rs);
+		}
 
 
+
+		return currnetPayNo;
+	}
+
+	
 }
