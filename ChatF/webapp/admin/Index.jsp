@@ -13,7 +13,7 @@
 	<body>
 		<div class="page-wrap">
 
-						<jsp:include page="../common/admin_navbar.jsp"></jsp:include>
+						<jsp:include page="../common/navbar.jsp"></jsp:include>
 			<!-- Main -->
 				<section id="main">
 

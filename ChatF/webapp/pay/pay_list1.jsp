@@ -227,32 +227,34 @@ border: 3px solid black;
 		<!-- Main -->
 		<section id="main">
 <c:if test="${loginUser.userRoll != 'a'}">
-	<!-- Header -->
-	<header id="header">
-		<div></div>
-	</header>
+			<!-- Banner -->
+			<section id="banner">
+				<div class="inner">
+					<h1>Hey, I'm Snapshot</h1>
+					<p>
+						A fully responsive gallery template by <a
+							href="https://templated.co">TEMPLATED</a>
+					</p>
+					<ul class="actions">
+						<li><a href="#galleries" class="button alt scrolly big">Continue</a></li>
+					</ul>
+				</div>
+			</section>
+
 </c:if>
 
 <c:if test="${loginUser.userRoll == 'a'}">
 	<!-- Header -->
-	<header id="header">
-		<div>관리자 로그인</div>
-	</header>
+						<header id="header">
+							<div>관리자 로그인</div>
+						</header>
 </c:if>
 
-	
 			<!-- Gallery -->
 			<section id="galleries">
 
-				<div class="gallery">
-				
-					<header>
-							<h1>Pay List</h1>
-					</header>					
-				
-					<div class="content">
+				<div class="column">
 					
-					<!-- ------------ search   ----------------- -->
 					<form action="#" method="post">
 						<div id="search">
 							<table>
@@ -264,7 +266,9 @@ border: 3px solid black;
 										</c:if>
 										<c:if test="${loginUser.userRoll =='u'}">
 										<td><input type="text" name="userId" value="${loginUser.userId}" readonly="readonly"></td>
+										 
 										</c:if>
+										
 									</tr>
 										<input type="hidden" name="page" value="1">
 								</tbody>
@@ -273,9 +277,11 @@ border: 3px solid black;
 						</div>
 								<input type="hidden" name="searchUser" value="">
 								<input type="hidden" name="check" value="listPay_ajax">
+						
+						
 					</form>
-					<!-- ------------ search   ----------------- -->
-					
+
+						<div class="field">
 							<table>
 								<thead>
 									<tr>
@@ -285,32 +291,36 @@ border: 3px solid black;
 										<td>구분</td>
 									</tr>
 								</thead>
-								<tbody>
-									
-									
-									<c:if test="${! empty payList}">
-											<c:forEach items="${payList}" var="pay">
-										<tr class="payNo">
-	
-												<td>${pay.payNo}</td>
-												<td>${pay.payDate }</td>
-												<td>${pay.price }</td>
-												<td>${pay.payFlag}</td>
-												<input type='hidden' name='payNo' value="${pay.payNo}">
-	
-										</tr>
-											</c:forEach>
-									</c:if>
-												
-									
-								</tbody>
+
+								<tbody id="board">
+								
+								<c:if test="${! empty payList}">
+										<c:forEach items="${payList}" var="pay">
+									<tr class="payNo">
+
+											<td>${pay.payNo}</td>
+											<td>${pay.payDate }</td>
+											<td>${pay.price }</td>
+											<td>${pay.payFlag}</td>
+											<input type='hidden' name='payNo' value="${pay.payNo}">
+
+									</tr>
+										</c:forEach>
+								</c:if>
+							</tbody>
 							</table>
 							
 						</div>
-						
+						<ul class="actions">
+							
+
+							
+						</ul>
+					
 				</div>
 				
 			</section>
+
 
 
 			<div id="dialog-form" title="Pay Detail">
@@ -324,8 +334,6 @@ border: 3px solid black;
 					<tr id="payDateTr"><td> payDate</td></tr>
 				</table>
 			</div>
-
-
 
 			<!-- Footer -->
 			<footer id="footer">

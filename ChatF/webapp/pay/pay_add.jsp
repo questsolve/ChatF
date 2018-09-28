@@ -111,57 +111,75 @@
 
 		<!-- Main -->
 		<section id="main">
+<c:if test="${loginUser.userRoll != 'a'}">
+	<!-- Header -->
+	<header id="header">
+		<div></div>
+	</header>
+</c:if>
 
-			<!-- Banner -->
-			<section id="banner">
-				<div class="inner">
-					<h1>Hey, I'm Snapshot</h1>
-					<p>
-						A fully responsive gallery template by <a
-							href="https://templated.co">TEMPLATED</a>
-					</p>
-					<ul class="actions">
-						<li><a href="#galleries" class="button alt scrolly big">Continue</a></li>
-					</ul>
-				</div>
-			</section>
+<c:if test="${loginUser.userRoll == 'a'}">
+	<!-- Header -->
+	<header id="header">
+		<div>관리자 로그인</div>
+	</header>
+</c:if>
 
-
+	
 			<!-- Gallery -->
 			<section id="galleries">
 
-				<div class="column">
+				<div class="gallery">
+				
+					<header>
+							<h1>Pay Add</h1>
+					</header>					
+				
+					<div class="content">
 					
 					
-					<form action="#" method="post">
-						<input type="hidden" name="check" value= "addPay">
 					
-					
-						<div class="field half first">
-							<label for="name">
-							<c:if test="${! empty loginUser}">
-								${loginUser.userId}
-							</c:if>
-							<c:if test="${ empty loginUser}">
-								userid
-							</c:if>
+							<table>
+								<tbody>
+									
+									
+									<form action="#" method="post">
+										<input type="hidden" name="check" value= "addPay">
+									
+									
+										<div class="field half first">
+											<label for="name">
+											<c:if test="${! empty loginUser}">
+												${loginUser.userId}
+											</c:if>
+											<c:if test="${ empty loginUser}">
+												userid
+											</c:if>
+											
+											</label> 
+										</div>
+										<div class="field">
+											<label for="message">결제 금액</label>
+											<input type="text" name="amount" value=""><br/>
+										</div>
+										<ul class="actions">
+											
+											<li><div class="col-sm-3 pay"><a id="paypal-button"></a></div></li>
+											
+										</ul>
+									</form>
+									
+								</tbody>
+							</table>
 							
-							</label> 
 						</div>
-						<div class="field">
-							<label for="message">결제 금액</label>
-							<input type="text" name="amount" value=""><br/>
-						</div>
-						<ul class="actions">
-							
-							<li><div class="col-sm-3 pay"><a id="paypal-button"></a></div></li>
-							
-						</ul>
-					</form>
+						
 				</div>
 				
 			</section>
 
+
+			
 			<!-- Footer -->
 			<footer id="footer">
 				<div class="copyright">

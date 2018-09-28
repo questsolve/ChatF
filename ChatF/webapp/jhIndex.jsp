@@ -14,6 +14,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="stylesheet" href="assets/css/main.css" />
+
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/js/jquery.poptrox.min.js"></script>
 <script src="assets/js/jquery.scrolly.min.js"></script>
@@ -343,8 +344,6 @@
 	padding: 16px 13px;
 	color: #999999;
 	border: 1px solid #d9d9d9;
-	
-	
 	background: transparent;
 	-moz-border-radius: 2px;
 	-webkit-border-radius: 2px;
@@ -697,10 +696,8 @@ px
 
 									<div class="submit-wrap">
 										<a class="button white" role="button" href="#">비밀번호 찾기</a> <a
-											class="button white" role="button" href="#">아이디 찾기</a>
-											
-											 
-											<input type="button" value="Login" class="submit"> <br>
+											class="button white" role="button" href="#">아이디 찾기</a> <input
+											type="button" value="Login" class="submit"> <br>
 										<input type="button" value="close" name ="close_login" class="submit">
 
 									</div>

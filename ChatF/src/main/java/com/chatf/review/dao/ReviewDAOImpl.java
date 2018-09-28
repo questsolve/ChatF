@@ -19,11 +19,10 @@ public class ReviewDAOImpl implements ReviewDAO{
         ResultSet rs =null;
         DBManager db = new DBManager();
         int re =0;
-        String sql = "insert into review(review_no,local_code,tag_code,user_id,write_date,review_title,review_contents" + 
-        		                         "upload_file,upload_map_x,uploadmap_y,activity_yn)" + 
-        		                         "values(review_seq.nextval,?,?,?,sysdate,?,?,?,?,?,y)";
+        String sql = "insert into review values(review_seq.nextval,?,?,?,sysdate,?,?,?,?,?,'y')";
 
 
+        System.out.println(sql);
         try {
         	conn=db.dbConn();
 			pstmt=conn.prepareStatement(sql);
@@ -36,6 +35,7 @@ public class ReviewDAOImpl implements ReviewDAO{
 			pstmt.setString(7, vo.getUploadMapX());
 			pstmt.setString(8, vo.getUploadMapY());
 			re = pstmt.executeUpdate();
+			
 			
 			
 		} catch (SQLException e) {
@@ -55,7 +55,7 @@ public class ReviewDAOImpl implements ReviewDAO{
 		ResultSet rs = null;
 		DBManager db = new DBManager();
 		int re = 0;
-		String sql ="update reveiw set reveiw_title= ?,review_contents=?,upload_file=?,upload_map_x=?,upload_map_y=? where reveiw_no=? ";
+		String sql ="update review set review_title= ?,review_contents=?,upload_file=?,upload_map_x=?,upload_map_y=? where review_no=? ";
 		try {
 			conn = db.dbConn();
 			pstmt = conn.prepareStatement(sql);
@@ -111,7 +111,7 @@ public class ReviewDAOImpl implements ReviewDAO{
 		DBManager db = new DBManager();
 		ArrayList<ReviewVO> list = new ArrayList<ReviewVO>();
 		
-		String sql = "select review_no,local_code,tag_code,user_id,write_date,review_title from review where review_no in\r\n" + 
+		String sql = "select review_no,local_code,tag_code,user_id,write_date,review_title from review where review_no in " + 
 				     "(SELECT review_no FROM like WHERE like_flag =’ok’AND ROWNUM <= 10 GROUP BY review_no ORDER BY COUNT(review_no) DESC)";
 		
 		try {
@@ -146,7 +146,7 @@ public class ReviewDAOImpl implements ReviewDAO{
 		DBManager db = new DBManager();
 		ArrayList<ReviewVO> list = new ArrayList<ReviewVO>();
 		
-		String sql = "select review_no, tag_code, user_id, write_date, review_title from review where local_code= ? and active_yn=y order by review_no  desc";
+		String sql = "select review_no, tag_code, user_id, write_date, review_title from review where local_code= ? and active_yn='y' order by review_no  desc";
 		
 		try {
 			conn=db.dbConn();
@@ -182,7 +182,7 @@ public class ReviewDAOImpl implements ReviewDAO{
 		DBManager db = new DBManager();
 		ReviewVO vo = new ReviewVO();
 	   
-		String sql ="select review_title, review_contents, upload_file, upload_map_x, upload_map_y, write_date, user_id, from review where review_no = ? and active_yn=y";
+		String sql ="select review_title, review_contents, upload_file, upload_map_x, upload_map_y, write_date, user_id from review where review_no = ? ";
 	
 		try {
 			conn = db.dbConn();

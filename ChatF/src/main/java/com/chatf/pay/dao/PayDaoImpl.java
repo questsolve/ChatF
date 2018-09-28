@@ -104,11 +104,96 @@ public class PayDaoImpl implements PayDao {
 	}
 
 
+	public List<PayVO> listPay(Search search){
+		List<PayVO> payList = new ArrayList<PayVO>();
+		StringBuilder sb = new StringBuilder();
+				
+		sb.append("SELECT * ");
+		sb.append(" FROM (");
+		sb.append(" SELECT ROWNUM AS row_no, inner.*");
+		sb.append(" FROM (");
+		sb.append(" SELECT");
+		sb.append(" pay_no,u.usage_no,pay_way,price,TO_CHAR(pay_date,'YYYY/MM/DD') AS pay_date,pay_flag");
+		sb.append(" FROM");
+		sb.append(" pay p, point_usage u");
+		sb.append(" WHERE p.usage_no = u.usage_no");
+		sb.append(" ) inner");
+		sb.append(" )");
+		sb.append(" WHERE row_no BETWEEN ? AND ?");
+		
+		DBManager dbm = new DBManager();
+		Connection con =null;
+		PreparedStatement pstate = null;
+		ResultSet rs = null;
+		try {
+			con = dbm.dbConn();
+			pstate = con.prepareStatement(sb.toString());
+			pstate.setInt(1, search.getStartRowNum());
+			pstate.setInt(2, search.getEndRowNum());
+			
+			rs = pstate.executeQuery();
+			
+			while(rs.next()) {
+				
+				PayVO pay = new PayVO();
+				pay.setPayNo(rs.getInt("pay_no"));
+				
+				if(rs.getInt("usage_no") != 0 ) {
+					PointVO point = new PointVO();
+					point.setUsageNo(rs.getInt("usage_no"));
+					pay.setUsageNo(point);
+				}
+			
+				pay.setPrice(rs.getInt("price"));
+				pay.setPayWay(rs.getString("pay_way"));
+				pay.setPayFlag(rs.getString("pay_flag"));
+				pay.setPayDate(rs.getString("pay_date"));
+				payList.add(pay);
+			}
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}finally {
+			dbm.dbClose(con, pstate,rs);
+		}
+				
+		
+		return payList;
+	}
+	
+	public int listCount() {
+		int rowCount =0;
+		StringBuilder sb = new StringBuilder();
+		sb.append("SELECT COUNT(1) AS cnt");
+		sb.append(" FROM pay p, point_usage u");
+		sb.append(" WHERE p.usage_no = u.usage_no ");
+		
+		DBManager dbm = new DBManager();
+		Connection con =null;
+		PreparedStatement pstate = null;
+		ResultSet rs = null;
+		try {
+			con = dbm.dbConn();
+			pstate = con.prepareStatement(sb.toString());
+			rs = pstate.executeQuery();
+			while(rs.next()) {
+				rowCount = rs.getInt("cnt");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+		return rowCount;
+	}
+	
+	
 
 
 	public List<PayVO> listPay(String userId,Search search){
 		List<PayVO> payList = new ArrayList<PayVO>();
-
+		System.out.println(userId+"paydaoImpl");
 		
 		StringBuilder sb = new StringBuilder();
 				
