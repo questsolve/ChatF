@@ -36,7 +36,7 @@ public class Test {
 		int dre = dao.deleteReview(2100007);
 		System.out.println(dre);
  */
-	/*
+	
 	    ArrayList<ReviewVO> list = new ArrayList<ReviewVO>();
 	    list = dao.listLocalReview(101);
 	    System.out.println(list.size());
@@ -47,7 +47,7 @@ public class Test {
 	    	System.out.println(list.get(i).getWriteDate());
 	    	System.out.println(list.get(i).getReviewTitle());
 	   	
-	    }*/
+	    }
 	
 	   ReviewVO vo = new ReviewVO();
 	   vo = dao.readReview(2100007);

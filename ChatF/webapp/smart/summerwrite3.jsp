@@ -16,8 +16,7 @@
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
       #map {
-        height: 300px;
-        width: 300px;
+        height: 100%;
       }
       /* Optional: Makes the sample page fill the window. */
       html, body {
@@ -61,61 +60,21 @@
 	 	        }
 	 	    });
 	 	}
-       
+        function attachMap(lat, lng, address) {
+        	//writeForm.title.value =lat +","+ lng;
+        	
+        	writeForm.lat.value = lat;
+            writeForm.lng.value = lng;
+            writeForm.title.value = lat + "dddd" + lng;
+            var url="https://maps.google.com/maps?width=100%&amp;height=600&amp;hl=en&amp;q="+address+"+()&amp;ie=UTF8&amp;t=&amp;z=14&amp;iwloc=B&amp;output=embed";
+            document.getElementById("iframediv").innerHTML ="";
+            console.log(url);
+            document.getElementById("iframediv").innerHTML ="<iframe name='iframeMap' src='"+url+"' width='400' height='250' frameborder='0' style='border:0' allowfullscreen></iframe>";
+            
+        }
+        
 	</script>
 
-
-
-
-<script>
-    
-      function attachMap(lat, lng, address) {
-    	  console.log(lat +","+ lng+","+ address);
-    	  
-    	  var str =  "{\"lat\":" +lat +",\"lng\":"+lng+"}";
-    	  
-    	  
-    	  var latlngObj = JSON.parse(str);
-    	  console.log(latlngObj);
-    	  
-          var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 14, 
-            center: latlngObj  //35.726498,139.7289853
-          });
-          var geocoder = new google.maps.Geocoder();
-		  geocodeAddress(geocoder, map);
-      }
-	  
-      function geocodeAddress(geocoder, resultsMap) {
-        var address = document.getElementById('address').value;
-        alert(address);
-        
-        geocoder.geocode({'address': address}, function(results, status) {
-          if (status === 'OK') {
-            resultsMap.setCenter(results[0].geometry.location);
-            latlngStr = results[0].geometry.location;
-            
-            console.log(resultsMap);
-            
-            var latPrm = results[0].geometry.location.lat();
-            var lngPrm = results[0].geometry.location.lng();
-            console.log('위도 : ' + latPrm + ' , 경도 : ' + lngPrm);
-            
-            var marker = new google.maps.Marker({
-              map: resultsMap,
-              position: results[0].geometry.location
-            });
-            
-          } else {
-            alert('Geocode was not successful for the following reason: ' + status);
-          }
-        });
-      }
-   
-      
-    </script>
-    
-    
 </head>
 <body>
 
@@ -168,9 +127,8 @@
        </select>
    지도첨부
       <a data-toggle="modal" href="#myModal">Open Modal</a>
-  		
-  		<textarea name="summernote" id="summernote"><div id="map"></div></textarea>
-		<script>
+  		<textarea name="summernote" id="summernote"><div id="iframediv"></div></textarea>
+        <script>
             $(document).ready(function() {
                 $('#summernote').summernote({ // summernote를 사용하기 위한 선언
                     height: 400,
@@ -254,6 +212,7 @@
             	alert('error : ' +data);
 
             }
+
         });
 
     }
@@ -261,8 +220,49 @@
   </script>
   
   
- 
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDJcHk8_kd6b3skfzz-FdR1BsiYh3e-ly0&callback=initMap">
+  <script>
+      function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 14, 
+          center: {lat: 37.56647, lng: 126.977963}
+        });
+        var geocoder = new google.maps.Geocoder();
+
+        document.getElementById('submit').addEventListener('click', function() {
+          geocodeAddress(geocoder, map);
+        });
+      }
+	  var latlngStr = "";
+      function geocodeAddress(geocoder, resultsMap) {
+        var address = document.getElementById('address').value;
+        geocoder.geocode({'address': address}, function(results, status) {
+          if (status === 'OK') {
+            resultsMap.setCenter(results[0].geometry.location);
+            latlngStr = results[0].geometry.location;
+            
+            var lat = results[0].geometry.location.lat();
+            var lng = results[0].geometry.location.lng();
+            console.log('위도 : ' + lat + ' , 경도 : ' + lng);
+            
+            var marker = new google.maps.Marker({
+              map: resultsMap,
+              position: results[0].geometry.location
+             
+            });
+            
+          } else {
+            alert('Geocode was not successful for the following reason: ' + status);
+          }
+        });
+        
+        
+        
+        
+        
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDJcHk8_kd6b3skfzz-FdR1BsiYh3e-ly0&callback=initMap">
     </script>
     
     

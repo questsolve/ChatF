@@ -9,6 +9,9 @@
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
+<head>
+	
+		<link rel="stylesheet" href="../assets/css/main.css" />
 
 <!-- include summernote css/js-->
 <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
@@ -16,8 +19,8 @@
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
       #map {
-        height: 300px;
-        width: 300px;
+           height: 300px;
+           width: 300px;
       }
       /* Optional: Makes the sample page fill the window. */
       html, body {
@@ -41,7 +44,29 @@
     </style>
     
 <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
-    
+
+
+
+
+<script>
+
+
+function cancle_Btn(){
+	var con_test = confirm("게시물 작성을 취소하시겠습니까?");
+	if(con_test == true){
+		location.replace('list_review.jsp');
+
+		
+	} 
+	else if(con_test == false){
+
+	}
+}
+</script>
+
+
+
+
 	<script type="text/javascript">
         /* summernote에서 이미지 업로드시 실행할 함수 */
 	 	function sendFile(file, editor) {
@@ -61,64 +86,50 @@
 	 	        }
 	 	    });
 	 	}
-       
-	</script>
-
-
-
-
-<script>
-    
-      function attachMap(lat, lng, address) {
-    	  console.log(lat +","+ lng+","+ address);
-    	  
-    	  var str =  "{\"lat\":" +lat +",\"lng\":"+lng+"}";
-    	  
-    	  
-    	  var latlngObj = JSON.parse(str);
-    	  console.log(latlngObj);
-    	  
-          var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 14, 
-            center: latlngObj  //35.726498,139.7289853
-          });
-          var geocoder = new google.maps.Geocoder();
-		  geocodeAddress(geocoder, map);
-      }
-	  
-      function geocodeAddress(geocoder, resultsMap) {
-        var address = document.getElementById('address').value;
-        alert(address);
+	    function attachMap(lat, lng, address) {
+        	//writeForm.title.value =lat +","+ lng;
+        	
+        	writeForm.lat.value = lat;
+            writeForm.lng.value = lng;
+           // writeForm.title.value = lat + "dddd" + lng;
+            console.log(lat+","+lng);
+            var url="https://maps.google.com/maps?width=100%&amp;height=600&amp;hl=en&amp;q="+address+"+()&amp;ie=UTF8&amp;t=&amp;z=14&amp;iwloc=B&amp;output=embed";
+            document.getElementById("iframediv").innerHTML ="";
+            console.log(url);
+            document.getElementById("iframediv").innerHTML ="<iframe name='iframeMap' src='"+url+"' width='400' height='250' frameborder='0' style='border:0' allowfullscreen></iframe>";
+            
+        }
         
-        geocoder.geocode({'address': address}, function(results, status) {
-          if (status === 'OK') {
-            resultsMap.setCenter(results[0].geometry.location);
-            latlngStr = results[0].geometry.location;
-            
-            console.log(resultsMap);
-            
-            var latPrm = results[0].geometry.location.lat();
-            var lngPrm = results[0].geometry.location.lng();
-            console.log('위도 : ' + latPrm + ' , 경도 : ' + lngPrm);
-            
-            var marker = new google.maps.Marker({
-              map: resultsMap,
-              position: results[0].geometry.location
-            });
-            
-          } else {
-            alert('Geocode was not successful for the following reason: ' + status);
-          }
-        });
-      }
-   
-      
-    </script>
-    
-    
+	      
+	    </script>
+	    
+
 </head>
 <body>
+<div class="page-wrap">
 
+			<jsp:include page="../common/navbar.jsp"></jsp:include>
+
+			<!-- Main -->
+				<section id="main">
+
+					<!-- Header -->
+						<header id="header">
+							
+						</header>
+
+					<!-- Gallery -->
+						<section id="galleries">
+
+							<!-- Photo Galleries -->
+							
+								<div class="gallery">
+
+									<!-- Filters -->
+									
+										<div>
+										
+										</div>
  <!----------------------- google map Modal -------------------------------------------->
   <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
@@ -127,7 +138,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">×</button>
-          <h4 class="modal-title">Modal Header</h4>
+          <h4 class="modal-title">FIND LOCATION</h4>
         </div>
         <div class="modal-body">  
           <!-- -여서부터 지도 -->
@@ -135,7 +146,7 @@
           	<input type="hidden" name="lat">
           	<input type="hidden" name="lng">
           </form>
-         <iframe src="/ChatF/map2.jsp" width=550 height=600></iframe>
+         <iframe src="/map2.jsp" width=550 height=600></iframe>
           <!-- -여서부터 지도 -->
         </div>
         <div class="modal-footer">
@@ -151,26 +162,26 @@
 
 
 	<h1>REVIEW WRITE</h1>
-	<form name="writeForm" action="./summernote_insert.jsp" method="post">
+	<form name="writeForm" action="/ReviewServlet" method="post">
+	<input type="hidden" name="info" value="addReview">
 	<input type="hidden" name="lat">
     <input type="hidden" name="lng">
-	TITLE   <input type="text" name="title" SIZE="60" > 
-    AREA   <form action="/action_page.php">
-       <select name="cars">
-       <option value="volvo">KANTO</option>
-       <option value="saab">KANSAI</option>
-       <option value="fiat">HOKKAIDO</option>
-       <option value="audi">KYUSYU</option>
+    AREA 
+       <select name="area" id="area">
+       <option value="101">KANTO</option>
+       <option value="102">KANSAI</option>
+       <option value="103">HOKKAIDO</option>
+       <option value="104">KYUSYU</option>
        </select>    
-    TAG   <select name="cars">
-       <option value="volvo">TOURISM</option>
-       <option value="saab">GOURMET</option>
+    TAG   <select name="tag" id ="tag">
+       <option value="201">TOURISM</option>
+       <option value="202">GOURMET</option>
        </select>
+	TITLE   <input type="text" name="title" SIZE="60" > 
    지도첨부
-      <a data-toggle="modal" href="#myModal">Open Modal</a>
-  		
-  		<textarea name="summernote" id="summernote"><div id="map"></div></textarea>
-		<script>
+      <a data-toggle="modal" href="#myModal">OPEN MAP</a>
+  		<textarea name="summernote" id="summernote"><div id="iframediv"></div></textarea>
+        <script>
             $(document).ready(function() {
                 $('#summernote').summernote({ // summernote를 사용하기 위한 선언
                     height: 400,
@@ -254,6 +265,7 @@
             	alert('error : ' +data);
 
             }
+
         });
 
     }
@@ -261,11 +273,57 @@
   </script>
   
   
- 
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDJcHk8_kd6b3skfzz-FdR1BsiYh3e-ly0&callback=initMap">
+  <script>
+      function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 14, 
+          center: {lat: 37.56647, lng: 126.977963}
+        });
+        var geocoder = new google.maps.Geocoder();
+
+        document.getElementById('submit').addEventListener('click', function() {
+          geocodeAddress(geocoder, map);
+        });
+      }
+	  var latlngStr = "";
+      function geocodeAddress(geocoder, resultsMap) {
+        var address = document.getElementById('address').value;
+        geocoder.geocode({'address': address}, function(results, status) {
+          if (status === 'OK') {
+            resultsMap.setCenter(results[0].geometry.location);
+            latlngStr = results[0].geometry.location;
+            
+            var lat = results[0].geometry.location.lat();
+            var lng = results[0].geometry.location.lng();
+            console.log('위도 : ' + lat + ' , 경도 : ' + lng);
+            
+            var marker = new google.maps.Marker({
+              map: resultsMap,
+              position: results[0].geometry.location
+             
+            });
+            
+          } else {
+            alert('Geocode was not successful for the following reason: ' + status);
+          }
+        });
+        
+        
+        
+        
+        
+      }
     </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDJcHk8_kd6b3skfzz-FdR1BsiYh3e-ly0&callback=initMap">
+    </script>
+    			<p align="right">
+								<input type="submit" id="writeBtn" name="reviewWrite"  value="WRITE">
+							
+								<input type="button" id="cancleBtn" name="rewrite"  onclick="cancle_Btn();" value="CANCLE" />
+								
+								</p>
     
-    
-  <input type="button" name="dd" value="wirte">
+
 </body>
 </html>

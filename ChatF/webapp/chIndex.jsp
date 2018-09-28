@@ -74,7 +74,7 @@
 			/* $("form[name=Login]").attr("method","POST").attr("action","/UserServlet").submit(); */
 			//self.location ="/UserServlet";
 			document.Login.action='/UserServlet';
-			document.Login.submit();
+		    document.Login.submit();
 		
 			
 		})

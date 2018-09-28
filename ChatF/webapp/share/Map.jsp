@@ -6,9 +6,6 @@
     <title>Simple Map</title>
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
-      <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAKU9UGmNsdFNOmct3llevT0oD1AQgUozA" />
 
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDJcHk8_kd6b3skfzz-FdR1BsiYh3e-ly0&libraries=places"></script>
     <style>
@@ -27,14 +24,24 @@
     </style>
   </head>
   <body>
+  <input id="locationTextField" type="text" size="50">
+  
     <div id="map"></div>
     <script>
       var map;
       function initMap() {
-    	  var myLatlng = new google.maps.LatLng(35.737402,138.083448);
+    	  function init() {
+              //var input = document.getElementById('locationTextField');
+              var autocomplete = new google.maps.places.Autocomplete("독산동");
+          }
+
+          google.maps.event.addDomListener(window, 'load', init);
+          
+          
+    	 /*  //var myLatlng = new google.maps.LatLng(35.737402,138.083448);
     	  var mapOptions = {
     	    zoom: 5,
-    	    center: myLatlng
+    	    center: "seoul"
     	  }
    
         var map = new google.maps.Map(document.getElementById("map"), mapOptions);
@@ -49,7 +56,7 @@
         	  };
 
         // To add the marker to the map, call setMap();
-        marker.setMap(map);
+        marker.setMap(map); */
         
       }
     </script>

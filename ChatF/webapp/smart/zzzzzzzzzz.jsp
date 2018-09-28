@@ -11,6 +11,7 @@
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
 
 <!-- include summernote css/js-->
+	<link rel="stylesheet" href="../assets/css/main.css" />
 <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
 <style>
       /* Always set the map height explicitly to define the size of the div
