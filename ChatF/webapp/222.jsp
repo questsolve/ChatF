@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 
 <!DOCTYPE HTML>
 <!--
@@ -107,8 +107,8 @@
  
     dialog = $( ".loginView" ).dialog({
       autoOpen: false,
-      height: 500,
-      width: 450,
+      height: 400,
+      width: 350,
       modal: true,
       buttons: {
         "Create an account": addUser,
@@ -132,83 +132,34 @@
     });
   } );
   </script>
-  <style>
-#header {
-	background-image:
-		url(/resources/images/tripIcon/knocker-2163643_1920.jpg);
-	background-color: #3a2748;
-}
-.buttonyagn {
-	background-color: #df7366;
-	display: inline-block;
-	border-radius: 100%;
-	width: 4.5em;
-	height: 4.5em;
-	line-height: 4.5em;
-	text-align: center;
-	font-size: 1.25em;
-	color: #fff;
-	padding: 0;
-}
-#topBtn{
-				position:fixed;
-				right:2%;
-				bottom:50px;
-				z-index:999;
-				background:#6cc;
-				font-weight: bolder
-}
-.toastMessage {
-    width:400px;
-    height:auto;
-    position:fixed;
-    left:50%;
-    margin-left:-200px;
-    bottom:15px;
-    background-color: #000000;
-    color: #F0F0F0;
-    font-size: 18px;
-    padding:12px;
-    text-align:center;
-    border-radius: 2px;
-    -webkit-box-shadow: 0px 0px 24px -1px rgba(56, 56, 56, 1);
-    -moz-box-shadow: 0px 0px 24px -1px rgba(56, 56, 56, 1);
-    box-shadow: 0px 0px 24px -1px rgba(56, 56, 56, 1);
-    z-index: 100;
-}
-.loginView * {
+  <style rel="stylesheet">
+@charset "UTF-8";
+@import url(https://fonts.googleapis.com/css?family=Lato:400,700);
+* {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  z-index: 10;
-  
 }
-.loginView {
+
+body {
   font-family: 'Lato', sans-serif;
   background-color: #f8f8f8;
   
-  
 }
-.loginView .container {
+body .container {
   position: relative;
   overflow: hidden;
-  max-width: 500px;
-  width: auto;
-  height:500px;  
+  width: 700px;
+  height: 500px;
+  margin: 80px auto 0;
   background-color: #ffffff;
+  -moz-box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 30px;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 30px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 30px;
+   z-index: 10;
+
 }
-.loginView .container .half {
-  float: left;
-  width: 100%;
-  height: 100%;
-  padding: 58px 40px 0;
-}
-.loginView .container .half.bg {
-  background-image: url("http://www.blueb.co.kr/SRC2/_image/v01.jpg");
-  background-size: 400px;
-  background-repeat: no-repeat;
-}
-.loginView .container h1 {
+body .container h1 {
   font-size: 18px;
   font-weight: 700;
   margin-bottom: 23px;
@@ -218,12 +169,12 @@
   text-transform: uppercase;
   color: #263238;
 }
-.loginView .container .tabs {
+body .container .tabs {
   width: 100%;
   margin-bottom: 29px;
   border-bottom: 1px solid #d9d9d9;
 }
-.loginView .container .tabs .tab {
+body .container .tabs .tab {
   display: inline-block;
   margin-bottom: -1px;
   padding: 20px 15px 10px;
@@ -236,56 +187,39 @@
   user-select: none;
   transition: all 0.1s ease-in-out;
 }
-.loginView .container .tabs .tab a {
+body .container .tabs .tab a {
   font-size: 11px;
   text-decoration: none;
   text-transform: uppercase;
   color: #d9d9d9;
   transition: all 0.1s ease-in-out;
 }
-.loginView .container .tabs .tab.active a, .loginView .container .tabs .tab:hover a {
+body .container .tabs .tab.active a, body .container .tabs .tab:hover a {
   color: #263238;
-  
 }
-.loginView .container .tabs .tab.active {
+body .container .tabs .tab.active {
   border-bottom: 1px solid #263238;
-  
 }
-.loginView .container .content form {
+body .container .content form {
   position: relative;
-  height: 400px;
+  height: 287px;
 }
-.loginView .container .content label:first-of-type, .loginView .container .content input:first-of-type, .loginView .container .content .more:first-of-type {
+body .container .content label:first-of-type, body .container .content input:first-of-type, body .container .content .more:first-of-type {
   -moz-animation: slideIn 0.4s cubic-bezier(0.37, 0.82, 0.2, 1);
   -webkit-animation: slideIn 0.4s cubic-bezier(0.37, 0.82, 0.2, 1);
   animation: slideIn 0.4s cubic-bezier(0.37, 0.82, 0.2, 1);
 }
-.loginView .container .content label:nth-of-type(2), .loginView .container .content input:nth-of-type(2), .loginView .container .content .more:nth-of-type(2) {
+body .container .content label:nth-of-type(2), body .container .content input:nth-of-type(2), body .container .content .more:nth-of-type(2) {
   -moz-animation: slideIn 0.5s cubic-bezier(0.37, 0.82, 0.2, 1);
   -webkit-animation: slideIn 0.5s cubic-bezier(0.37, 0.82, 0.2, 1);
   animation: slideIn 0.5s cubic-bezier(0.37, 0.82, 0.2, 1);
 }
-.loginView .container .content label:nth-of-type(3), .loginView .container .content input:nth-of-type(3), .loginView .container .content .more:nth-of-type(3) {
+body .container .content label:nth-of-type(3), body .container .content input:nth-of-type(3), body .container .content .more:nth-of-type(3) {
   -moz-animation: slideIn 0.6s cubic-bezier(0.37, 0.82, 0.2, 1);
   -webkit-animation: slideIn 0.6s cubic-bezier(0.37, 0.82, 0.2, 1);
   animation: slideIn 0.6s cubic-bezier(0.37, 0.82, 0.2, 1);
 }
-.loginView .container .content label:nth-of-type(4), .loginView .container .content input:nth-of-type(4), .loginView .container .content .more:nth-of-type(4) {
-  -moz-animation: slideIn 0.6s cubic-bezier(0.37, 0.82, 0.2, 1);
-  -webkit-animation: slideIn 0.6s cubic-bezier(0.37, 0.82, 0.2, 1);
-  animation: slideIn 0.6s cubic-bezier(0.37, 0.82, 0.2, 1);
-}
-.loginView .container .content label:nth-of-type(5), .loginView .container .content input:nth-of-type(5), .loginView .container .content .more:nth-of-type(5) {
-  -moz-animation: slideIn 0.6s cubic-bezier(0.37, 0.82, 0.2, 1);
-  -webkit-animation: slideIn 0.6s cubic-bezier(0.37, 0.82, 0.2, 1);
-  animation: slideIn 0.6s cubic-bezier(0.37, 0.82, 0.2, 1);
-}
-.loginView img {
-  -moz-animation: slideIn 0.6s cubic-bezier(0.37, 0.82, 0.2, 1);
-  -webkit-animation: slideIn 0.6s cubic-bezier(0.37, 0.82, 0.2, 1);
-  animation: slideIn 0.6s cubic-bezier(0.37, 0.82, 0.2, 1);
-}
-.loginView .container .content label {
+body .container .content label {
   font-size: 12px;
   color: #263238;
   -moz-user-select: -moz-none;
@@ -293,27 +227,13 @@
   -webkit-user-select: none;
   user-select: none;
 }
-.loginView .container .content label:not([for='remember']) {
+body .container .content label:not([for='remember']) {
   display: none;
 }
-.loginView .container .content input.inpt {
-  font-size: 13pt;
-  display: block;
-  width: 100%;
-  height: 42px;
-  margin-bottom: 12px;
-  
-  color: #999999;
-  border: 1px solid #d9d9d9;
-  background: transparent;
-  -moz-border-radius: 2px;
-  -webkit-border-radius: 2px;
-  border-radius: 2px;
-}
-.loginView .container .content input.inpt.email {
+body .container .content input.inpt {
   font-size: 14px;
   display: block;
-  width: 80%;
+  width: 100%;
   height: 42px;
   margin-bottom: 12px;
   padding: 16px 13px;
@@ -323,67 +243,31 @@
   -moz-border-radius: 2px;
   -webkit-border-radius: 2px;
   border-radius: 2px;
-  float: left;
-  
-  
 }
-.loginView .container .content input.inpt.access {
-  font-size: 14px;
-  
-  display: block;
-  width: 20%;
-  height: 42px;
-  margin-bottom: 12px;
-  
-  color: #ffffff;
-  border: 1px solid #d9d9d9;
-  background: transparent;
-  -moz-border-radius: 2px;
-  -webkit-border-radius: 2px;
-  border-radius: 2px;
-  background: #111111;
-}
-.loginView .container .content input.inpt::-webkit-input-placeholder {
+body .container .content input.inpt::-webkit-input-placeholder {
   font-size: 14px;
   color: #999999;
   font-family: 'Lato', sans-serif;
 }
-.loginView .container .content input.inpt:-moz-placeholder {
+body .container .content input.inpt:-moz-placeholder {
   font-size: 14px;
   color: #999999;
   font-family: 'Lato', sans-serif;
 }
-.loginView .container .content input.inpt::-moz-placeholder {
+body .container .content input.inpt::-moz-placeholder {
   font-size: 14px;
   color: #999999;
   font-family: 'Lato', sans-serif;
 }
-.loginView .container .content input.inpt:-ms-input-placeholder {
+body .container .content input.inpt:-ms-input-placeholder {
   font-size: 14px;
   color: #999999;
   font-family: 'Lato', sans-serif;
 }
-.loginView .container .content input.inpt:focus {
+body .container .content input.inpt:focus {
   border-color: #999999;
 }
-.loginView .container .content input.submit {
-  font-size: 15px;
-	
-  display: block;
-  width: 100%;
-  height: 42px;
-  cursor: pointer;
-  vertical-align: middle;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: #263238;
-  border: 1px solid #263238;
-  background: transparent;
-  -moz-border-radius: 2px;
-  -webkit-border-radius: 2px;
-  border-radius: 2px;
-}
-.loginView .container .content.signin-cont.cont input.submit {
+body .container .content input.submit {
   font-size: 12px;
   line-height: 42px;
   display: block;
@@ -400,7 +284,7 @@
   -webkit-border-radius: 2px;
   border-radius: 2px;
 }
-.loginView .container .content input.submit:hover {
+body .container .content input.submit:hover {
   background-color: #263238;
   color: #ffffff;
   -moz-transition: all 0.2s;
@@ -408,28 +292,67 @@
   -webkit-transition: all 0.2s;
   transition: all 0.2s;
 }
-.loginView .container .content input:focus {
+body .container .content input:focus {
   outline: none;
 }
-.loginView .container .content .submit-wrap {
+body .container .content .checkbox {
+  margin-top: 4px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  width: 0;
+  height: 0;
+  margin: 17px -1px;
+  padding: 0;
+  border: 0;
+}
+body .container .content .checkbox + label {
+  vertical-align: middle;
+  display: inline-block;
+  width: 50%;
+}
+body .container .content .checkbox + label:before {
+  content: "\A";
+  color: #999999;
+  font-family: Verdana;
+  font-weight: bold;
+  font-size: 8px;
+  line-height: 10px;
+  text-align: center;
+  display: inline-block;
+  vertical-align: middle;
   position: relative;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  background: transparent;
+  border: 1px solid #d9d9d9;
+  width: 11px;
+  height: 11px;
+  margin: -2px 8px 0 0;
+}
+body .container .content .checkbox:checked + label:before {
+  content: "✓";
+}
+body .container .content .submit-wrap {
+  position: absolute;
   bottom: 0;
   width: 100%;
 }
-.loginView .container .content .submit-wrap a {
-  font-size: 14px;
+body .container .content .submit-wrap a {
+  font-size: 12px;
   display: block;
-  margin-bottom: 20px;
+  margin-top: 20px;
   text-align: center;
   text-decoration: none;
-  color: #6b6b6b;
+  color: #999999;
 }
-.loginView .container .content .submit-wrap a:hover {
+body .container .content .submit-wrap a:hover {
   text-decoration: underline;
 }
-.loginView .container .content .signup-cont {
+body .container .content .signup-cont {
   display: none;
 }
+
 @keyframes slideIn {
   0% {
     filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
@@ -454,7 +377,7 @@
     margin-left: 0px;
   }
 }
-.loginView .credits {
+.credits {
   display: block;
   position: absolute;
   right: 0;
@@ -463,30 +386,12 @@
   font-size: 14px;
   margin: 0 10px 10px 0;
 }
-.loginView .credits a {
+.credits a {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
   opacity: 0.8;
   color: inherit;
   font-weight: 700;
   text-decoration: none;
-}
-.loginView img{
-	max-width: 100%;
- 	width: auto; 
-	height: auto;
-}
-.white{
-	width: 90px;
-    float: right;
-    font-size: 10pt;
-    padding: 0;
-    background: #ffffff;
-}
-.white:hover{
-	background: none;
-}
-.loginView input[type="button"]{
-	padding: 0;
 }
 </style>
 	</head>
@@ -508,10 +413,10 @@
 					<!-- Banner -->
 						<section id="banner">
 							<div class="inner">
-								<h1>Hey, I'm Snapshot</h1>
-								<p>A fully responsive gallery template by <a href="https://templated.co">TEMPLATED</a></p>
+								<h1>WelCome</h1>
+								<p>Travle Of Japan <a href="https://templated.co"></a></p>
 								<ul class="actions">
-									<li><button id="create-user">Create new user</button></li>
+									<li><button id="create-user">Join/Login</button></li>
 								</ul>
 							</div>
 						</section>
@@ -608,59 +513,47 @@
 		
 	
 	<div class="loginView" style="display: none;">
-		        <section class="container">
-		        <button type="button" class="ui-button ui-corner-all ui-widget ui-button-icon-only ui-dialog-titlebar-close" title="Close"><span class="ui-button-icon ui-icon ui-icon-closethick"></span><span class="ui-button-icon-space"> </span>Close</button>
-				    <article class="">
-				       
-				        <div class="tabs">
-				            <span class="tab signin active"><a href="#signin" style="font-size: 15pt;">로그인</a></span>
-				            &nbsp;&nbsp;&nbsp;
-				            <span class="tab signup"><a href="#signup" style="font-size: 15pt;">가입하기</a></span>
-				        </div>
-				        <div class="content">
+		       <section class="container">
+		    <article class="half">
+			        <h1>Login</h1>
+			        <div class="tabs">
+				            <span class="tab signin active"><a href="#signin">Sign in</a></span>
+				            <span class="tab signup"><a href="#signup">Sign up</a></span>
+			        </div>
+			        <div class="content">
 				            <div class="signin-cont cont">
-				                <form name ="Login">
-					                <input type="text" name="userId" class="inpt" required="required" placeholder="아이디">
-					                
-					                <input type="password" name="password" class="inpt" required="required" placeholder="비밀번호">
-											        			    			                
-						            <div class="submit-wrap">
-						            <a class="button white" role="button" href="#">비밀번호 찾기</a>
-						            <a class="button white" role="button" href="#" >아이디 찾기</a>
-									
-					 	               <input type="button" value="Login" class="submit">
-						 	        </div>
-		        		    	</form>
-		    				</div>
-		    				<div class="signup-cont cont">
-			                	<form name ="join">
-									<input type="text" name="userId" class="inpt" required="required" placeholder="아이디" oninput="checkId();">
-									<input type="password" name="password" class="inpt" required="required" placeholder="비밀번호">
-									<input type="password" name="password2" class="inpt" required="required" placeholder="비밀번호 확인">
-									
-									<ul>
-										<li><input type="text" name="email" class="inpt email" required="required" placeholder="이메일" value="${outerUser.email}" oninput="emailValid();"></li>
-			                			<li><input type="button" class="inpt access" name="sendEmail" value="인증"></li>
-			                		</ul>
-			                		
-			                		<ul>
-										<li><input type="text" name="code" class="inpt email" required="required" placeholder="인증번호" ></li>
-			                			<li><input type="button" class="inpt access" name="checkCode" value="확인"></li>
-			                		</ul>
-			                		
-									
-			                		
-									<div class="submit-wrap">
-										<img src="../resources/images/userImage/kakao_account_login_btn_medium_narrow.png" class="6u 12u(mobile) special" name="kakaoLogin">
-			                			<img src="../resources/images/userImage/naverLongBar-iloveimg-resized.png" class="6u 12u(mobile) special" name ="naverLogin" style="padding-left: 20px">
-										<input type="button" value="가입" class="submit">
-									</div>
-									
-			        			</form>
-			            	</div>
-						</div>
-					</article>
-				</section>
+					                <form action="#" method="post" enctype="multipart/form-data">
+						                    <input type="email" name="email" id="email" class="inpt" required="required" placeholder="Your email">
+						                    <label for="email">Your email</label>
+						                    <input type="password" name="password" id="password" class="inpt" required="required" placeholder="Your password">
+                						    <label for="password">Your password</label>
+						                    <input type="checkbox" id="remember" class="checkbox" checked>
+						                    <label for="remember">Remember me</label>
+						                    <div class="submit-wrap">
+							                        <input type="submit" value="Sign in" class="submit">
+							                        <a href="#" class="more">Forgot your password?</a>
+						                    </div>
+        					        </form>
+    				        </div>
+    				        <div class="signup-cont cont">
+                <form action="#" method="post" enctype="multipart/form-data">
+						                    <input type="email" name="email" id="name" class="inpt" required="required" placeholder="Your name">
+						                    <label for="name">Your name</label>
+                    <input type="email" name="email" id="email" class="inpt" required="required" placeholder="Your email">
+						                    <label for="email">Your email</label>
+						                    <input type="password" name="password" id="password" class="inpt" required="required" placeholder="Your password">
+                						    <label for="password">Your password</label>
+						                    <div class="submit-wrap">
+							                        <input type="submit" value="Sign up" class="submit">
+							                        <a href="#" class="more">Terms and conditions</a>
+						                    </div>
+        					        </form>
+            </div>
+			        </div>
+		    </article>
+		   
+	</section>
+			
 			</div>
 
  

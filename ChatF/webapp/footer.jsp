@@ -14,6 +14,7 @@
 								<h3>더 다양한 나들이 정보를 원하시나요?</h3>
 							</header>
 							<p>아래 링크를 통해 다양한 나들이 정보를 확인하실 수 있습니다.</p>
+						
 							<ul class="icons">
 								<li><a href="#" class="icon fa-twitter"><span
 										class="label">Twitter</span></a></li>

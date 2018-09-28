@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import com.chatf.common.DBManager;
@@ -16,9 +17,9 @@ public class UserDAOImpl implements UserDAO{
 
 	public int adduser(UserVO mvo) {
 		Connection conn = null;
-		PreparedStatement pstmt =null;
-		
-		
+		PreparedStatement pstmt = null;
+		    
+	
 		DBManager db = new DBManager();
 		StringBuilder sql = new StringBuilder();
 		sql.append("INSERT INTO ");
@@ -48,6 +49,7 @@ public class UserDAOImpl implements UserDAO{
 		}
 		return joinYN;
 	}
+	
 	
 	public int delete(String userId) {
 		Connection conn = null;
@@ -249,6 +251,7 @@ public class UserDAOImpl implements UserDAO{
 		int index = 1;
 		
 		int res = 0;
+		
 		try {
 			conn = db.dbConn();
 			pstmt = conn.prepareStatement(sql.toString());
@@ -278,7 +281,7 @@ public class UserDAOImpl implements UserDAO{
 		return res;
 	}
 
-	
+
 
 
 

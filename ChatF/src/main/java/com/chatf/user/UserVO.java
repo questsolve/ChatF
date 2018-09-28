@@ -64,13 +64,10 @@ public class UserVO {
 	public void setUserRoll(String userRoll) {
 		this.userRoll = userRoll;
 	}
-	@Override
+
 	public String toString() {
 		return "UserVO [userId=" + userId + ", userName=" + userName + ", activeYn=" + activeYn + ", userBirthday="
 				+ userBirthday + ", userEmail=" + userEmail + ", userPw=" + userPw + ", userImage=" + userImage
 				+ ", userRegdate=" + userRegdate + ", userRoll=" + userRoll + "]";
-	}
-	
-	
-	
+}
 }
