@@ -21,7 +21,8 @@ $(function(){
 		self.location = "/share/list_review.jsp"
 	});
 	$("#top").on("click",function(){
-		alert("채팅으로 가기 ");
+		
+		self.location = "/chatSelect.jsp"
 	});
 	
 	$("#addPayView").on("click",function(){

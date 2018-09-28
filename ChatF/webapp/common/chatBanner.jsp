@@ -4,34 +4,13 @@
 
     
     
-					<!-- Banner -->
-						<section id="banner">
-							<div class="inner">
-								<h1>Hey, I'm ChatF</h1>
-								<p>Go on a trip together!</p>
-								<ul class="actions">
-									<li><a href="#galleries" class="button big">Continue</a></li>
-								</ul>
-									<ul class="actions">
-				
-				<!-- create 버튼  -->
-					<c:if test="${empty loginUser}">
-						<li><button id="create-user">Create new user</button></li>
-					</c:if>
-					
-					</ul>
-				<!--             -->	
-					
-							</div>
-						</section>
-
 					<!-- Gallery -->
 						<section id="galleries">
 
 							<!-- Photo Galleries -->
 								<div class="gallery">
 									<header class="special">
-										<h2>Where are you going?</h2>
+										<h2>Please select a chat room</h2>
 									</header>
 									<div class="content">
 										<div class="media">
@@ -66,9 +45,9 @@
 											<a href="images/fulls/07.jpg"><img src="images/thumbs/07.jpg" alt="" title="This right here is a caption." /></a>
 										</div>
 									</div>
-									<footer>
+									<!-- <footer>
 										<a href="gallery.html" class="button big">Full Gallery</a>
-									</footer>
+									</footer> -->
 								</div>
 						</section>
 
@@ -83,12 +62,12 @@
 	});
 </script>
  -->
+<!-- 
 
-
-<!-- Contact -->
+Contact
 <section id="contact" >
 
-	<!-- Chat -->
+	Chat
 	<div class="column" style="
 	width: 70%;
 	height: 70%;
@@ -96,12 +75,12 @@
 		<h3>Chatting</h3>
 		<form action="#" method="post">
 
-<!-- 
+
 			<div class="field">
 				<label for="message">Message</label>
 				<textarea name="message" class="messageWindow" id="messageWindow"
 					rows="20" readonly="true" placeholder="Message"></textarea>
-			</div> -->
+			</div>
 
 
 <div class="messageDiv" id="messageDiv">
@@ -138,4 +117,4 @@
 
 		</form>
 	</div>
-</section>
+</section> -->
