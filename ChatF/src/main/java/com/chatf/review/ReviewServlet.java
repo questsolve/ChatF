@@ -49,9 +49,11 @@ public class ReviewServlet extends HttpServlet {
 			readReview(request,response);
 		}else if(info.equals("deleteReivew")) {
 			deleteReview(request,response);
+		}else if(info.equals(null)||info.equals("")) {
+			System.out.println("신호없음 !!");
 		}
 			
-			
+		
 	}
 
 	private void addReview(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -87,20 +89,19 @@ public class ReviewServlet extends HttpServlet {
 		
 	}
 	private void readReview(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	    HttpSession session = request.getSession(true);
+		HttpSession session = request.getSession(true);
 		UserVO user =(UserVO)session.getAttribute("loginUser");
-		
 		ReviewDAO reviewdao= new ReviewDAOImpl();
 		ReviewVO rvo = new ReviewVO();
 		ArrayList<ReviewVO> rlist = new ArrayList<ReviewVO>();
 		
-		
 		//int area  = Integer.parseInt(request.getParameter("area"));
+		int area  =101;
 		
-		
-		rlist = reviewdao.listLocalReview(101);
+		rlist = reviewdao.listLocalReview(area);
 		request.setAttribute("keylist", rlist);
-		request.getRequestDispatcher("share/list_review.jsp").forward(request,response);
+		request.getRequestDispatcher("list_review.jsp").forward(request, response);
+		
 		
 				
 	}

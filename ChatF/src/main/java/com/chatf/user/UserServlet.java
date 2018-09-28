@@ -2,6 +2,7 @@ package com.chatf.user;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,6 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.chatf.common.Search;
+import com.chatf.pay.PayVO;
+import com.chatf.pay.dao.PayDao;
+import com.chatf.pay.dao.PayDaoImpl;
 import com.chatf.user.dao.UserDAO;
 import com.chatf.user.dao.UserDAOImpl;
 
@@ -90,9 +95,8 @@ public class UserServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 
 		response.setContentType("text/html; charset=euc-kr");
-		out.println("<script language='javascript'>alert('sign success')</script>");
-		response.sendRedirect("chIndex.jsp");
-		
+
+		response.sendRedirect("chIndexOrigin.jsp");		
 	}
 	
 	private void readUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -102,7 +106,21 @@ public class UserServlet extends HttpServlet {
 	
 	private void listUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		//TODO
+		String curPage = request.getParameter("page");
+		Search search = new Search();
+		if(curPage != null) {
+			search.setCurrentPage(Integer.parseInt(curPage));
+			
+		}else {
+			search.setCurrentPage(1);
+		}
+		search.setPageSize(10);
+		
+		
+		userDao = new UserDAOImpl();
+		List<UserVO> list = userDao.listUser(search);
+		request.setAttribute("userList", list);
+		request.getRequestDispatcher("user/user_list.jsp").forward(request, response);
 	}
 	
 	private void deleteUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -122,19 +140,15 @@ public class UserServlet extends HttpServlet {
 		if(user.getUserPw().equals(password)) {
 			session.setAttribute("loginUser", user);
 			
-			session.setAttribute("loginUserRoll", user.getUserRoll());
 			if(user.getUserRoll().equals("a") ) {
 				response.sendRedirect("admin/Index.jsp");
-			} else {
-				response.sendRedirect("chIndex.jsp");
+			} else {	
+				response.sendRedirect("chIndexOrigin.jsp");
 			}
-			//System.out.println("로그인 성공");
 			
 		}else {
 			System.out.println("로그인 실패");
-		}
-		
-			
+		}		
 	}
 	
 	private void logout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -142,7 +156,8 @@ public class UserServlet extends HttpServlet {
 		System.out.println("logOut");
 		
 		session.removeAttribute("loginUser");
-		response.sendRedirect("chIndex.jsp");
+		
+		response.sendRedirect("chIndexOrigin.jsp");
 	}
 	
 	

@@ -77,17 +77,8 @@ html {
 			<!-- Main -->
 			<section id="main">
 
-			
 			<!-- banner -->
-			<jsp:include page="/common/banner.jsp"></jsp:include>
-
-			<!-- login Ui -->
-			<jsp:include page="/common/loginUi.jsp"></jsp:include>
-
-
-			<!-- Footer -->
-			<jsp:include page="/common/footer.jsp"></jsp:include>
-			
+			<jsp:include page="/common/kantoRoom.jsp"></jsp:include>
 		</section>
 	</div>
 	

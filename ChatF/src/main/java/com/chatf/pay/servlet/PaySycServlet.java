@@ -2,7 +2,6 @@ package com.chatf.pay.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -22,23 +21,19 @@ import com.chatf.point.dao.PointDaoImpl;
 import com.chatf.user.UserVO;
 import com.google.gson.Gson;
 
-
-
 /**
- * Servlet implementation class PayServlet
+ * Servlet implementation class PaySycServlet
  */
-@WebServlet("/PayServlet")
-public class PayServlet extends HttpServlet {
+@WebServlet("/PaySynServlet")
+ 
+public class PaySycServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    
+
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
-		
-		
 	}
 
 	/**
@@ -46,7 +41,6 @@ public class PayServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		//어떤 일을 할지에 대한 요구사항 판단 check의 value로 확인
 		String check = request.getParameter("check");
 		System.out.println(check+"!!!");
 		
@@ -56,26 +50,28 @@ public class PayServlet extends HttpServlet {
 			addPay(request, response);
 		}else if(check.equals("readPay")){
 			readPay(request, response);
-		}else if (check.equals("listPay_ajax")) {
-			listPayByAjax(request, response);
-		}else if (check.equals("readPay_ajax")) {
-			readPayByAjax(request, response);
 		}else if (check.equals("listPay")) {
 			listPay(request, response);
 		}else if (check.equals("addPayView")) {
 			addPayView(request, response);
+		}else if (check.equals("listPay_ajax")) {
+			listPayByAjax(request, response);
 		}
 		
 	}
-	
-	
+
 	private void addPay(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("addPay");
 		HttpSession session = request.getSession(true);
 		PointDao pointDao = new PointDaoImpl();
 		UserVO user =(UserVO)session.getAttribute("loginUser");
+		
+		System.out.println(user);
+		
+		
+		
 		int currentPointNO = 0;
-		if(user == null) {
+		if(user != null) {
 			currentPointNO = pointDao.readCurrentPointNO(user.getUserId());
 			System.out.println("payServlet: "+currentPointNO);
 		}
@@ -124,8 +120,48 @@ public class PayServlet extends HttpServlet {
 		request.setAttribute("totalPoint", totalPoint);
 		//TODO 현재 포인트 량 확인해서 requestScope에 넘겨주기
 		
-		request.getRequestDispatcher("/pay/pay_read.jsp").forward(request, response);
+		request.getRequestDispatcher("/pay/pay_read2.jsp").forward(request, response);
 		
+	}
+	
+	private void listPay(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("listPay");
+		HttpSession session = request.getSession(true);
+		
+		UserVO user = (UserVO)session.getAttribute("loginUser"); 
+		//System.out.println(user.getUserId());
+		Search search = new Search();
+		
+		String curPage = request.getParameter("page");
+				
+		if(curPage != null) {
+			search.setCurrentPage(Integer.parseInt(curPage));
+			
+		}else {
+			search.setCurrentPage(1);
+		}
+		
+		
+		if((request.getAttribute("loginUser"))==null &&
+			(session.getAttribute("loginUser"))==null) {
+		}
+			
+		
+		search.setPageSize(10);
+		System.out.println(search.getStartRowNum());
+		System.out.println(search.getEndRowNum());
+		System.out.println(user.getUserId());
+		
+		PayDao paydao = new PayDaoImpl();
+		List<PayVO> list = paydao.listPay(user.getUserId(), search);
+		System.out.println(list.size());
+		request.setAttribute("payList", list);
+		request.getRequestDispatcher("/pay/pay_list2.jsp").forward(request, response);
+		
+	}
+	
+	private void addPayView(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.sendRedirect("/pay/pay_add2.jsp");
 	}
 	
 	private void listPayByAjax(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -164,72 +200,4 @@ public class PayServlet extends HttpServlet {
 		out.println(gsonStr);
 		
 	}
-	
-	
-	private void readPayByAjax(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("readPayAjax");
-		
-		String payNoStr = request.getParameter("payNo");
-		System.out.println(payNoStr);
-		int payNo=0;
-		if(!(payNoStr.equals("")|| payNoStr==null)) {
-			payNo = Integer.parseInt(payNoStr);
-		}
-		PayDao payDao = new PayDaoImpl();
-		PayVO pay = payDao.readPay(payNo);
-		
-		Gson gson = new Gson(); 
-		String gsonStr = gson.toJson(pay); 
-		System.out.println(gsonStr);
-		
-		PrintWriter out = response.getWriter();
-		out.println(gsonStr);
-		
-	}
-	
-	private void listPay(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("listPay");
-		HttpSession session = request.getSession(true);
-		
-		UserVO user = (UserVO)session.getAttribute("loginUser"); 
-		//System.out.println(user.getUserId());
-		Search search = new Search();
-		
-		String curPage = request.getParameter("page");
-				
-		if(curPage != null) {
-			search.setCurrentPage(Integer.parseInt(curPage));
-			
-		}else {
-			search.setCurrentPage(1);
-		}
-		
-		
-		if((request.getAttribute("loginUser"))==null &&
-			(session.getAttribute("loginUser"))==null) {
-		}
-			
-		
-		search.setPageSize(10);
-		System.out.println(search.getStartRowNum());
-		System.out.println(search.getEndRowNum());
-		
-		PayDao paydao = new PayDaoImpl();
-		List<PayVO> list = new ArrayList<PayVO>();
-		
-		if(user.getUserRoll().equals("a")) {
-			list = paydao.listPay(search);
-		} else {
-			list = paydao.listPay(user.getUserId(), search);
-		}
-		
-		request.setAttribute("payList", list);
-		request.getRequestDispatcher("/pay/pay_list.jsp").forward(request, response);
-		
-	}
-	
-	private void addPayView(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.sendRedirect("/pay/pay_add.jsp");
-	}
-
 }

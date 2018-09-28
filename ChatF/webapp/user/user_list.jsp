@@ -172,7 +172,7 @@ $(function(){
 	  //alert($("input[name=page]").val());
 	  
 	  var queryString = $("form").serialize();
-	  alert(queryString);
+	  //alert(queryString);
 	  searchUserId(queryString);
   });
 });
@@ -218,92 +218,74 @@ background-color: #f1f1f1;
 
 		<!-- Main -->
 		<section id="main">
+<c:if test="${loginUser.userRoll != 'a'}">
+	<!-- Header -->
+	<header id="header">
+		<div></div>
+	</header>
+</c:if>
 
-			<!-- Banner -->
-			<section id="banner">
-				<div class="inner">
-					<h1>Hey, I'm Snapshot</h1>
-					<p>
-						A fully responsive gallery template by <a
-							href="https://templated.co">TEMPLATED</a>
-					</p>
-					<ul class="actions">
-						<li><a href="#galleries" class="button alt scrolly big">Continue</a></li>
-					</ul>
-				</div>
-			</section>
+<c:if test="${loginUser.userRoll == 'a'}">
+	<!-- Header -->
+	<header id="header">
+		<div>관리자 로그인</div>
+	</header>
+</c:if>
 
-
+	
 			<!-- Gallery -->
 			<section id="galleries">
 
-				<div class="column">
-					
-					<form action="#" method="post">
-						<div id="search">
-							<table>
-								<tbody >
-									<tr >
-										<td>확인할 User :</td>
-										<c:if test="${loginUser.user_roll eq a}">
-										<td><input type="text" name="userId" value=""></td>
-										</c:if>
-										<c:if test="${loginUser.user_roll eq u}">
-										<td>${loginUser.userId}</td>
-										</c:if>
-										
-									</tr>
-										<input type="hidden" name="page" value="1">
-								</tbody>
-							</table>
-
-						</div>
-								<input type="hidden" name="check" value="listPay">
-						
-						
-					</form>
-
-						<div class="field">
+				<div class="gallery">
+				
+					<header>
+							<h1>User List</h1>
+					</header>					
+				
+					<div class="content">
 							<table>
 								<thead>
 									<tr>
-										<td>결제 번호</td>
-										<td>결제일</td>
-										<td>결제액</td>
-										<td>구분</td>
+										<td>회원아이디</td>
+										<td>회원명</td>
+										<td>생년월일</td>
+										<td>이메일</td>
+										<td>가입일</td>
+										<td>회원사진</td>
 									</tr>
 								</thead>
-								<tbody id="board">
+								<tbody>
 									
-									<tr>
-										<c:if test="${empty payList}">
-											<td>testNo</td>
-											<td>testDate</td>
-											<td>testPrice</td>
-											<td>testFlag</td>
+									
+										<c:if test="${empty userList}">
+											<tr>
+												<td>-</td>
+												<td>-</td>
+												<td>-</td>
+												<td>-</td>
+												<td>-</td>
+												<td>-</td>
+											</tr>
+										</c:if>
+										<c:if test="${!empty userList}">	
+											<c:forEach items="${userList}" var="user">
+												<tr>
+													<td>${user.userId}</td>
+													<td>${user.userName}</td>
+													<td>${user.userBirthday}</td>
+													<td>${user.userEmail}</td>
+													<td>${user.userRegdate}</td>
+													<td>${user.userImage}</td>
+												</tr>
+											</c:forEach>
 										</c:if>
 										
-										<c:if test="${payList}">
-
-											<c:forEach items="${payList}" varStatus="pay">
-												<td>${pay.payNo}</td>
-												<td>${pay.payDate }</td>
-												<td>${pay.price }</td>
-												<td>${pay.payFlag}</td>
-											</c:forEach>
-											
-										</c:if>
-									</tr>
+									
 								</tbody>
 							</table>
 							
 						</div>
-						<ul class="actions">
-							
-
-							
-						</ul>
-					
+						
 				</div>
 				
 			</section>

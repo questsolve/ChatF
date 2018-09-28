@@ -1,0 +1,439 @@
+@charset "UTF-8";
+
+
+.buttonyagn {
+	background-color: #df7366;
+	display: inline-block;
+	border-radius: 100%;
+	width: 4.5em;
+	height: 4.5em;
+	line-height: 4.5em;
+	text-align: center;
+	font-size: 1.25em;
+	color: #fff;
+	padding: 0;
+}
+
+#topBtn {
+	position: fixed;
+	right: 2%;
+	bottom: 50px;
+	z-index: 999;
+	background: #6cc;
+	font-weight: bolder
+}
+
+.toastMessage {
+	width: 400px;
+	height: auto;
+	position: fixed;
+	left: 50%;
+	margin-left: -200px;
+	bottom: 15px;
+	background-color: #000000;
+	color: #F0F0F0;
+	font-size: 18px;
+	padding: 12px;
+	text-align: center;
+	border-radius: 2px;
+	-webkit-box-shadow: 0px 0px 24px -1px rgba(56, 56, 56, 1);
+	-moz-box-shadow: 0px 0px 24px -1px rgba(56, 56, 56, 1);
+	box-shadow: 0px 0px 24px -1px rgba(56, 56, 56, 1);
+	z-index: 100;
+}
+
+.loginView * {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	z-index: 10;
+}
+
+.loginView {
+	font-family: 'Lato', sans-serif;
+	background-color: #f8f8f8;
+}
+
+.loginView .container {
+	position: relative;
+	overflow: hidden;
+	max-width: 500px;
+	width: auto;
+	height: 500px;
+	background-color: #ffffff;
+}
+
+.loginView .container .half {
+	float: left;
+	width: 100%;
+	height: 100%;
+	padding: 58px 40px 0;
+}
+
+.loginView .container .half.bg {
+	background-image: url("http://www.blueb.co.kr/SRC2/_image/v01.jpg");
+	background-size: 400px;
+	background-repeat: no-repeat;
+}
+
+.loginView .container h1 {
+	font-size: 18px;
+	font-weight: 700;
+	margin-bottom: 23px;
+	text-align: center;
+	text-indent: 6px;
+	letter-spacing: 7px;
+	text-transform: uppercase;
+	color: #263238;
+}
+
+.loginView .container .tabs {
+	width: 100%;
+	margin-bottom: 29px;
+	border-bottom: 1px solid #d9d9d9;
+}
+
+.loginView .container .tabs .tab {
+	display: inline-block;
+	margin-bottom: -1px;
+	padding: 20px 15px 10px;
+	cursor: pointer;
+	letter-spacing: 0;
+	border-bottom: 1px solid #d9d9d9;
+	-moz-user-select: -moz-none;
+	-ms-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+	transition: all 0.1s ease-in-out;
+}
+
+.loginView .container .tabs .tab a {
+	font-size: 11px;
+	text-decoration: none;
+	text-transform: uppercase;
+	color: #d9d9d9;
+	transition: all 0.1s ease-in-out;
+}
+
+.loginView .container .tabs .tab.active a, .loginView .container .tabs .tab:hover a
+	{
+	color: #263238;
+}
+
+.loginView .container .tabs .tab.active {
+	border-bottom: 1px solid #263238;
+}
+
+.loginView .container .content form {
+	position: relative;
+	height: 400px;
+}
+
+.loginView .container {
+	width: 500px;
+	height: 500px;
+}
+
+.loginView .container .content label:first-of-type, .loginView .container .content input:first-of-type,
+	.loginView .container .content .more:first-of-type {
+	-moz-animation: slideIn 0.4s cubic-bezier(0.37, 0.82, 0.2, 1);
+	-webkit-animation: slideIn 0.4s cubic-bezier(0.37, 0.82, 0.2, 1);
+	animation: slideIn 0.4s cubic-bezier(0.37, 0.82, 0.2, 1);
+}
+
+.loginView .container .content label:nth-of-type(2), .loginView .container .content input:nth-of-type(2),
+	.loginView .container .content .more:nth-of-type(2) {
+	-moz-animation: slideIn 0.5s cubic-bezier(0.37, 0.82, 0.2, 1);
+	-webkit-animation: slideIn 0.5s cubic-bezier(0.37, 0.82, 0.2, 1);
+	animation: slideIn 0.5s cubic-bezier(0.37, 0.82, 0.2, 1);
+}
+
+.loginView .container .content label:nth-of-type(3), .loginView .container .content input:nth-of-type(3),
+	.loginView .container .content .more:nth-of-type(3) {
+	-moz-animation: slideIn 0.6s cubic-bezier(0.37, 0.82, 0.2, 1);
+	-webkit-animation: slideIn 0.6s cubic-bezier(0.37, 0.82, 0.2, 1);
+	animation: slideIn 0.6s cubic-bezier(0.37, 0.82, 0.2, 1);
+}
+
+.loginView .container .content label:nth-of-type(4), .loginView .container .content input:nth-of-type(4),
+	.loginView .container .content .more:nth-of-type(4) {
+	-moz-animation: slideIn 0.6s cubic-bezier(0.37, 0.82, 0.2, 1);
+	-webkit-animation: slideIn 0.6s cubic-bezier(0.37, 0.82, 0.2, 1);
+	animation: slideIn 0.6s cubic-bezier(0.37, 0.82, 0.2, 1);
+}
+
+.loginView .container .content label:nth-of-type(5), .loginView .container .content input:nth-of-type(5),
+	.loginView .container .content .more:nth-of-type(5) {
+	-moz-animation: slideIn 0.6s cubic-bezier(0.37, 0.82, 0.2, 1);
+	-webkit-animation: slideIn 0.6s cubic-bezier(0.37, 0.82, 0.2, 1);
+	animation: slideIn 0.6s cubic-bezier(0.37, 0.82, 0.2, 1);
+}
+
+.loginView img {
+	-moz-animation: slideIn 0.6s cubic-bezier(0.37, 0.82, 0.2, 1);
+	-webkit-animation: slideIn 0.6s cubic-bezier(0.37, 0.82, 0.2, 1);
+	animation: slideIn 0.6s cubic-bezier(0.37, 0.82, 0.2, 1);
+}
+
+.loginView .container .content label {
+	font-size: 12px;
+	color: #263238;
+	-moz-user-select: -moz-none;
+	-ms-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+}
+
+.loginView .container .content label:not ([for='remember'] ) {
+	display: none;
+}
+
+.loginView .container .content input.inpt {
+	font-size: 13pt;
+	display: block;
+	width: 100%;
+	height: 42px;
+	margin-bottom: 12px;
+	color: #999999;
+	border: 1px solid #d9d9d9;
+	background: transparent;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	border-radius: 2px;
+}
+
+.loginView .container .content input.inpt.email {
+	font-size: 14px;
+	display: block;
+	width: 80%;
+	height: 42px;
+	margin-bottom: 12px;
+	padding: 16px 13px;
+	color: #999999;
+	border: 1px solid #d9d9d9;
+	background: transparent;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	border-radius: 2px;
+	float: left;
+}
+
+.loginView .container .content input.inpt.access {
+	font-size: 14px;
+	display: block;
+	width: 20%;
+	height: 42px;
+	margin-bottom: 12px;
+	color: #ffffff;
+	border: 1px solid #d9d9d9;
+	background: transparent;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	border-radius: 2px;
+	background: #111111;
+}
+
+.loginView .container .content input.inpt::-webkit-input-placeholder {
+	font-size: 14px;
+	color: #999999;
+	font-family: 'Lato', sans-serif;
+}
+
+.loginView .container .content input.inpt:-moz-placeholder {
+	font-size: 14px;
+	color: #999999;
+	font-family: 'Lato', sans-serif;
+}
+
+.loginView .container .content input.inpt::-moz-placeholder {
+	font-size: 14px;
+	color: #999999;
+	font-family: 'Lato', sans-serif;
+}
+
+.loginView .container .content input.inpt:-ms-input-placeholder {
+	font-size: 14px;
+	color: #999999;
+	font-family: 'Lato', sans-serif;
+}
+
+.loginView .container .content input.inpt:focus {
+	border-color: #999999;
+}
+
+.loginView .container .content input.submit {
+	font-size: 15px;
+	display: block;
+	width: 100%;
+	height: 42px;
+	cursor: pointer;
+	vertical-align: middle;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	color: #263238;
+	border: 1px solid #263238;
+	background: transparent;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	border-radius: 2px;
+}
+
+.loginView .container .content.signin-cont.cont input.submit {
+	font-size: 12px;
+	line-height: 42px;
+	display: block;
+	width: 100%;
+	height: 42px;
+	cursor: pointer;
+	vertical-align: middle;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	color: #263238;
+	border: 1px solid #263238;
+	background: transparent;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	border-radius: 2px;
+}
+
+.loginView .container .content input.submit:hover {
+	background-color: #263238;
+	color: #ffffff;
+	-moz-transition: all 0.2s;
+	-o-transition: all 0.2s;
+	-webkit-transition: all 0.2s;
+	transition: all 0.2s;
+}
+
+.loginView .container .content input:focus {
+	outline: none;
+}
+
+.loginView .container .content .submit-wrap {
+	position: relative;
+	bottom: 0;
+	width: 100%;
+}
+
+.loginView .container .content .submit-wrap a {
+	font-size: 14px;
+	display: block;
+	margin-bottom: 20px;
+	text-align: center;
+	text-decoration: none;
+	color: #6b6b6b;
+}
+
+.loginView .container .content .submit-wrap a:hover {
+	text-decoration: underline;
+}
+
+.loginView .container .content .signup-cont {
+	display: none;
+}
+
+@
+keyframes slideIn { 0% {
+	filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+	opacity: 0;
+	margin-left: -320px;
+}
+
+100%
+{
+filter
+:
+ 
+progid
+:DXImageTransform
+.Microsoft
+.Alpha
+(enabled=false);
+
+    
+opacity
+:
+ 
+1;
+margin-left
+:
+ 
+0
+px
+;
+
+  
+}
+}
+@
+-webkit-keyframes slideIn { 0% {
+	filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+	opacity: 0;
+	margin-left: -320px;
+}
+
+100%
+{
+filter
+:
+ 
+progid
+:DXImageTransform
+.Microsoft
+.Alpha
+(enabled=false);
+
+    
+opacity
+:
+ 
+1;
+margin-left
+:
+ 
+0
+px
+;
+
+  
+}
+}
+.loginView .credits {
+	display: block;
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	color: #999999;
+	font-size: 14px;
+	margin: 0 10px 10px 0;
+}
+
+.loginView .credits a {
+	filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
+	opacity: 0.8;
+	color: inherit;
+	font-weight: 700;
+	text-decoration: none;
+}
+
+.loginView img {
+	max-width: 100%;
+	width: auto;
+	height: auto;
+}
+
+.white {
+	width: 90px;
+	float: right;
+	font-size: 10pt;
+	padding: 0;
+	background: #ffffff;
+}
+
+.white:hover {
+	background: none;
+}
+
+.loginView input[type="button"] {
+	padding: 0;
+}

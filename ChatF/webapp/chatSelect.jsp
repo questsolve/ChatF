@@ -76,18 +76,15 @@ html {
 
 			<!-- Main -->
 			<section id="main">
+<c:if test="${loginUser.userRoll != 'a'}">
+<!-- Header -->
+	<header id="header">
+		<div></div>
+	</header>
+</c:if>
 
-			
 			<!-- banner -->
-			<jsp:include page="/common/banner.jsp"></jsp:include>
-
-			<!-- login Ui -->
-			<jsp:include page="/common/loginUi.jsp"></jsp:include>
-
-
-			<!-- Footer -->
-			<jsp:include page="/common/footer.jsp"></jsp:include>
-			
+			<jsp:include page="/common/chatBanner.jsp"></jsp:include>
 		</section>
 	</div>
 	

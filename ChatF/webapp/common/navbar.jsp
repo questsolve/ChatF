@@ -21,7 +21,8 @@ $(function(){
 		self.location = "/share/list_review.jsp"
 	});
 	$("#top").on("click",function(){
-		alert("채팅으로 가기 ");
+		
+		self.location = "/chatSelect.jsp"
 	});
 	
 	$("#addPayView").on("click",function(){
@@ -30,21 +31,25 @@ $(function(){
 	
 	
 	$("#listPay").on("click",function(){
-		self.location="/pay/pay_list.jsp";
+		self.location="/PayServlet?check=listPay";
 	});
-	
+	$("#user").on("click",function(){
+		self.location = "/UserServlet?info=listUser"
+	});
 	
 	
 });
 
 </script>
+
+<c:if test="${loginUser.userRoll == 'u' || empty loginUser}">
 <nav id="nav">
 	<ul>
-		<c:if test="${loginUserRoll != 'a'}">
+		<c:if test="${empty loginUser}">
 
 			<li><a id="login"><span class="icon fa fa-id-card-o"></span></a></li>
 		</c:if>
-		<c:if test="${loginUserRoll == 'a'}">
+		<c:if test="${! empty loginUser}">
 			<li><a id="logout"><span class="icon fa fa-envelope"></span></a></li>
 		</c:if>
 
@@ -55,3 +60,21 @@ $(function(){
 		<li><a id="listPay"><span class="icon fa fa-list"></span></a></li>
 	</ul>
 </nav>
+</c:if>
+
+<c:if test="${loginUser.userRoll == 'a'}">
+<nav id="nav">
+	<ul>
+		<c:if test="${empty loginUser}">
+			<li><a id="login"><span class="icon fa fa-id-card-o"></span></a></li>
+		</c:if>
+		<c:if test="${! empty loginUser}">
+			<li><a id="logout"><span class="icon fa fa-envelope"></span></a></li>
+		</c:if>
+		<li><a id="user">U</a></li>
+		<li><a id="chat">C</a></li>
+		<li><a id="test">B</a></li>
+		<li><a id="listPay">P</a></li>
+	</ul>
+</nav>
+</c:if>

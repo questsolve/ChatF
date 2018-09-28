@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import = "com.chatf.user.dao.UserDAOImpl" %>
-<%@ page import = "com.chatf.user.UserVO" %>
 
 <!DOCTYPE HTML>
 <!--
@@ -16,20 +14,21 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="stylesheet" href="assets/css/main.css" />
+
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/js/jquery.poptrox.min.js"></script>
 <script src="assets/js/jquery.scrolly.min.js"></script>
 <script src="assets/js/skel.min.js"></script>
 <script src="assets/js/util.js"></script>
 <script src="assets/js/main.js"></script>
-<script type="text/javascript" src="./chat/js/chatMain.js"></script>
+<script type="text/javascript" ></script>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
 
 	$(function() {
 		
-		$('.ui-dialog-titlebar .ui-corner-all .ui-widget-header .ui-helper-clearfix .ui-draggable-handle').prop("display","none");
+	
 		
 		$('.tabs .tab').click(function() {
 			if ($(this).hasClass('signin')) {
@@ -76,7 +75,8 @@
 			/* $("form[name=Login]").attr("method","POST").attr("action","/UserServlet").submit(); */
 			//self.location ="/UserServlet";
 			document.Login.action='/UserServlet';
-			document.Login.submit();
+			document.Login.method = "post"
+		    document.Login.submit();
 		
 			
 		})
@@ -108,7 +108,31 @@
 		
 		
 	});
-</script>
+	
+
+
+     $(document).ready(function(){
+
+  	   $('#SignIn').click(function(){
+         if($('#userId').val()==""){
+      	   alert("id입력")
+      	   $('#userId').focus();
+         }else if($('#password').val()==""){
+      	   alert("pw입력")
+      	   $('#password').focus();
+         }else if($('#password2').val()==""){
+      	   alert("pw입력")
+      	   $('#password2').focus();
+         }else{
+      	   $("#join").submit();
+         }
+   });
+  
+      });
+     
+ </script>
+ <body onLoad="setFocus()">
+
 <style>
 .buttonyagn {
 	background-color: #df7366;
@@ -235,7 +259,7 @@
 
 .loginView .container .content form {
 	position: relative;
-	height: 287px;
+	height: 400px;
 }
 
 .loginView .container {
@@ -371,8 +395,7 @@
 }
 
 .loginView .container .content input.submit {
-	font-size: 12px;
-	line-height: 42px;
+	font-size: 15px;
 	display: block;
 	width: 100%;
 	height: 42px;
@@ -561,14 +584,14 @@ px
 			<!-- Banner -->
 			<section id="banner">
 				<div class="inner">
-					<h1>Hey, I'm Snapshot</h1>
+					<h1>WelCome</h1>
 					<p>
-						A fully responsive gallery template by <a
-							href="https://templated.co">TEMPLATED</a>
+						Travle Of Japan <a
+							href="https://templated.co"></a>
 					</p>
 					<ul class="actions">
 					<c:if test="${empty loginUser}">
-						<li><button id="create-user">Create new user</button></li>
+						<li><button id="create-user">JOIN / LOGIN</button></li>
 					</c:if>
 					
 					</ul>
@@ -651,13 +674,6 @@ px
 			</section>
 
 
-
-
-
-
-
-
-
 			<div class="loginView" style="display: none;">
 				<section class="container">
 
@@ -687,34 +703,25 @@ px
 									</div>
 								</form>
 							</div>
+	
 							<div class="signup-cont cont">
 								<form name="join">
 								<input type="hidden" name="info" value ="addUser">
 									<input type="text" name="userId" class="inpt"
 										required="required" placeholder="아이디" oninput="checkId();">
-										 <input type="button"
-										
-										
-										class="inpt access" name="idCheck" value="중복확인">
-										
 									<input type="password" name="password" class="inpt"
 										required="required" placeholder="비밀번호"> <input
 										type="password" name="password2" class="inpt"
 										required="required" placeholder="비밀번호 확인"> <input
 										type="text" name="email" class="inpt email"
 										required="required" placeholder="이메일" value=""
-										oninput="emailValid();">
-										
-										 <input type="button"
-										
-										
+										oninput="emailValid();"> <input type="button"
 										class="inpt access" name="sendEmail" value="인증"> <input
 										type="text" name="code" class="inpt email" required="required"
-										placeholder="인증번호">
+										placeholder="인증번호"> <input type="button"
+										class="inpt access" name="checkCode" value="확인"> 
 										
-										 <input type="button"
-										class="inpt access" name="checkCode" value="확인"> <input
-										type="button" value="SignIn" class="submit"> <br>
+										<input type="button"  id = "SignIn" value="SignIn" class="submit"> <br>
 									<input type="button" value="close" name="close_SignIn" class="submit">
 
 
@@ -738,4 +745,5 @@ px
 	<!-- Scripts -->
 
 </body>
+
 </html>

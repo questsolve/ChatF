@@ -50,7 +50,10 @@ public class PointServlet extends HttpServlet {
 		pointVO.setPoint(point);
 		if(user ==null) {
 			pointVO.setUserId("testuser01");
+		}else {
+			pointVO.setUserId(user.getUserId());
 		}
+		
 		pointVO.setUsageFlag("add");
 		
 		int res = pointDao.addPoint(pointVO);
